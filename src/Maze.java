@@ -8,9 +8,9 @@ import java.io.PrintWriter;
 
 
 public class Maze {
-    // private Tile entrance;
-    // private Tile exit;
-    // private List<List<Tile>> tiles;
+    private Tile entrance;
+    private Tile exit;
+    private List<List<Tile>> tiles;
 
 
     private void Maze(){}
@@ -38,4 +38,60 @@ public class Maze {
              System.out.println("Error: IOException when reading "+ path);
         }return null;
     }
+
+    private void setEntrance(Tile tile){
+
+    }
+
+    private void setExit(Tile tile){
+
+    }
+
+    public List<List<Tile>> getTiles(){
+
+    }
+
+    public String toString(){
+
+    }
+
+    public Tile getAdjacentTile(Tile tile, Direction dir){
+
+    }
+
+    public Coordinate getTileLocation(Tile tile){
+
+    }
+
+    public Tile getTileAtLocation(Coordinate coords){
+
+    }
+
+    class Coordinate{
+        
+        private int x;
+        private int y;
+
+        public void Coordinate(int xx, int yy){
+
+        }
+
+        public int getX(){
+            return x;
+        }
+
+        public int getY(){
+            return y;
+        }
+
+        public String toString(){
+
+        }
+
+    }
+
+    public enum Direction {
+        NORTH,SOUTH,EAST,WEST;
+    }
+
 }
