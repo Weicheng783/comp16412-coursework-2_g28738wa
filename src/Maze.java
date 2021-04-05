@@ -26,7 +26,9 @@ public class Maze {
 
     private void Maze(){}
 
-    public static Maze fromTxt(String path){
+    public static Maze fromTxt(String path)  {
+       // throws InvalidMazeException
+        
         
         Maze a = new Maze();
 
@@ -101,6 +103,9 @@ public class Maze {
         } catch (IOException e) {
              System.out.println("Error: IOException when reading "+ path);
         }
+        // }finally{
+        //     throw new RaggedMazeException("This is Ragged excep.", FileNotFoundException);
+        // }
 
         return a;
     }
