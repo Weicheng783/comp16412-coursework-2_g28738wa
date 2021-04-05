@@ -22,6 +22,7 @@ public class Maze {
     // private static Tile[][] tiless;
 
     private static int lineno = 0;
+    private static int colno = 0;
 
     private void Maze(){}
 
@@ -89,7 +90,8 @@ public class Maze {
             for(int m = lineno-1; m >= 0; m--){
                 for(int n = 0; n < a.tiles.get(m).size(); n++){
                     a.tiles.get(m).get(n).coords = a.setCoord(m, n); //This has been fixed.
-                    // System.out.println(m+","+n+". Success!");
+                    colno = a.tiles.get(m).size();
+                    System.out.println(m+","+n+". Success!");
                 }
             }
             System.out.println(a.tiles);
@@ -130,10 +132,41 @@ public class Maze {
 
     }
 
-    // public Tile getAdjacentTile(Tile tile, Direction dir){
+    public Tile getAdjacentTile(Tile tile, Direction dir){
+        if(dir == Direction.SOUTH){
+            if(getTileLocation(tile).getX() == 0){
+                System.out.println("You can not go below this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX()-1 , getTileLocation(tile).getY() ));
+            }
+        }else if(dir == Direction.NORTH){
+           if(getTileLocation(tile).getX() == lineno-1){
+                System.out.println("You can not go beyond this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX()+1 , getTileLocation(tile).getY() ));
+            }
+        }else if(dir == Direction.WEST){
+           if(getTileLocation(tile).getY() == 0){
+                System.out.println("You can not go below this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX() , getTileLocation(tile).getY()-1 ));
+            }
+        }else if(dir == Direction.EAST){
+           if(getTileLocation(tile).getX() == colno-1){
+                System.out.println("You can not go beyond this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX() , getTileLocation(tile).getY()+1 ));
+            }
+        }else{
+            System.out.println("emmm, received no direction.");
+            return null;
+        }
 
-
-    // }
+    }
 
     public Coordinate getTileLocation(Tile tile){
         // return tile.Coordinate;
@@ -162,6 +195,7 @@ public class Maze {
         private int y;
 
         public void Coordinate(int xx, int yy){
+            // Coordinate a = new Coordinate();
             x = xx;
             y = yy;
         }
