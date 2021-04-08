@@ -1,7 +1,7 @@
 package maze;
 
 public class NoEntranceException extends InvalidMazeException {
-    public NoEntranceException(String message, Throwable cause){
-        super(message, cause);
+    public NoEntranceException(String message){
+        super(message);
     }
 }

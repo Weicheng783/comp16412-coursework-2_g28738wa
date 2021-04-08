@@ -37,12 +37,10 @@ public class Maze {
      *  @param path: txt file path, it is a String object.
      *  @return Return a Maze object if the layout of the maze is valid, otherwise throw exceptions.
      */
-    public static Maze fromTxt(String path)  {
-       // throws InvalidMazeException
-        
-        
-        Maze a = new Maze();
+    public static Maze fromTxt(String path) throws InvalidMazeException {
 
+        Maze a = new Maze();
+        
         try (
             BufferedReader bufferedReader = new BufferedReader(
                 new FileReader(path)
@@ -114,10 +112,7 @@ public class Maze {
         } catch (IOException e) {
              System.out.println("Error: IOException when reading "+ path);
         }
-        // }finally{
-        //     throw new RaggedMazeException("This is Ragged excep.", FileNotFoundException);
-        // }
-
+        // throw new RaggedMazeException("HAHA GOOD! YOU THROWED AN EXCEPTION!");
         return a;
     }
 

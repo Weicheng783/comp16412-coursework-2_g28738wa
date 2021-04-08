@@ -1,7 +1,7 @@
 package maze;
 
 public class MultipleExitException extends InvalidMazeException {
-    public MultipleExitException(String message, Throwable cause){
-        super(message, cause);
+    public MultipleExitException(String message){
+        super(message;
     }
 }
