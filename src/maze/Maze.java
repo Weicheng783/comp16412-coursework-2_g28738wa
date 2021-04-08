@@ -30,6 +30,8 @@ public class Maze {
 
     private static int lineno = 0;
     private static int colno = 0;
+    private static boolean firstenter = true;
+    private static int noofchars = 0;
 
     private void Maze(){}
 
@@ -59,31 +61,39 @@ public class Maze {
                 List<Tile> tiiles = new LinkedList<>();
                 
                 int length = line.length();
+
+                if (firstenter == true){
+                    noofchars = length;
+                    firstenter = false;
+                }else{
+                    if(length != noofchars){
+                        throw new RaggedMazeException("This is a ragged maze, please check that every line contains the same number of tiles.");
+                    }
+                }
+
+                noofchars = length;
                 // System.out.println(length);
                 // for (int i = 0; i < lineno; i++){
 
                     for (int m = 0; m < length; m++){
+                            Tile temp = Tile.fromChar(line.toCharArray()[m]);
 
-                            // System.out.println(length);
-                            // System.out.println(lineno);
-                            // System.out.println(m);
+                            tiiles.add(temp);
 
-                            // a.testt.add("nhas   sa  asd a453");
-                            // a.testt.add("good moring!");
-                            // System.out.println(a.testt);
-
-                            // System.out.println(a.tiiles);
-                            
-                            // a.tiles[1][1]=Tile.fromChar(line.toCharArray()[1]);
-                            // System.out.println(Tile.fromChar(line.toCharArray()[m]).getType());
-                            tiiles.add(Tile.fromChar(line.toCharArray()[m]) );
-                            // Coordinate.Coordinate(lineno,m);
-                            // System.out.println(a.tiiles);
-                            
-                        // Coordinate [lineno][m]
+                            if (line.toCharArray()[m] == 'e'){
+                                if(a.entrance == null){
+                                    a.setEntrance(temp);
+                                }else{
+                                    throw new MultipleEntranceException("A maze can not have multiple entrance.");
+                                }
+                            }else if(line.toCharArray()[m] == 'x'){
+                                if(a.exit == null){
+                                    a.setExit(temp);
+                                }else{
+                                    throw new MultipleExitException("A maze can not have multiple exit.");
+                                }
+                            }
                     }
-                // }
-                // Maze.setMaze(tiless);
                 
                 a.tiles.add(lineno, tiiles);
                 // System.out.println(a.tiles);
@@ -94,6 +104,14 @@ public class Maze {
 
                 line = bufferedReader.readLine();
                 
+            }
+
+            if(a.entrance == null){
+                throw new NoEntranceException("No entrance found! A maze must have exactly one entrance.");
+            }
+
+            if(a.exit == null){
+                throw new NoExitException("No exit found! A maze must have exactly one exit.");
             }
 
             lineno = a.tiles.size();
