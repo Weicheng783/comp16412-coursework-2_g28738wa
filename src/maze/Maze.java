@@ -92,6 +92,8 @@ public class Maze {
                                 }else{
                                     throw new MultipleExitException("A maze can not have multiple exit.");
                                 }
+                            }else if (line.toCharArray()[m] != 'e' && line.toCharArray()[m] != 'x' && line.toCharArray()[m] != '.' && line.toCharArray()[m] != '#'){
+                                throw new InvalidMazeException("This maze contains an unknown tile (invalid char) '" + line.toCharArray()[m] + "', please check again.");
                             }
                     }
                 
@@ -118,9 +120,9 @@ public class Maze {
 
             for(int m = lineno-1; m >= 0; m--){
                 for(int n = 0; n < a.tiles.get(m).size(); n++){
-                    a.tiles.get(m).get(n).coords = a.setCoord(m, n); //This has been fixed.
+                    a.tiles.get(lineno-1-m).get(n).coords = a.setCoord(m, n);
                     colno = a.tiles.get(m).size();
-                    System.out.println(m+","+n+". Success!");
+                    // System.out.println(m+","+n+". Success!");
                 }
             }
             System.out.println(a.tiles);
@@ -131,6 +133,9 @@ public class Maze {
              System.out.println("Error: IOException when reading "+ path);
         }
         // throw new RaggedMazeException("HAHA GOOD! YOU THROWED AN EXCEPTION!");
+        // System.out.println(lineno);
+        // System.out.println(colno);
+
         return a;
     }
 
@@ -177,11 +182,23 @@ public class Maze {
     }
 
     /**
-     * Return a string representation in the command line.
+     * Return a string representation of the tile objects.
      * @return A string representation of tile objects.
      */
     public String toString(){
-        return "";
+        String all = "";
+        for (int i = lineno-1; i >= 0; i--){
+            String split = "";
+            for (int ii = 0; ii < colno; ii ++){
+                split = split + getTileAtLocation(setCoord(i,ii)).toString();
+            }
+            if (i != 0){
+                split = split + "\n";
+            }
+            all = all + split;
+        }
+        return all;
+        //!!!This is suspectable!!!
 
     }
 
@@ -214,7 +231,7 @@ public class Maze {
                 return getTileAtLocation(setCoord( getTileLocation(tile).getX() , getTileLocation(tile).getY()-1 ));
             }
         }else if(dir == Direction.EAST){
-           if(getTileLocation(tile).getX() == colno-1){
+           if(getTileLocation(tile).getY() == colno-1){
                 System.out.println("You can not go beyond this axis.");
                 return null;
             }else{
@@ -245,7 +262,7 @@ public class Maze {
      * @param coords: Specific coordinate object.
      */
     public Tile getTileAtLocation(Coordinate coords){
-        return tiles.get(coords.getX()).get(coords.getY());
+        return tiles.get(lineno-1-coords.getX()).get(coords.getY());
 
     }
 
