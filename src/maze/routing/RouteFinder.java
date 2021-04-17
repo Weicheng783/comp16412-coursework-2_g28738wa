@@ -5,9 +5,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import maze.*;
 
-public class RouteFinder{
+public class RouteFinder implements Serializable{
     // <E> 
     private Maze maze;
     private Stack<Tile> route = new Stack<> ();
@@ -15,8 +29,12 @@ public class RouteFinder{
 
     private List<Tile> blackList= new LinkedList<> ();
 
+    // public void RouteFinder(){};//!!!notice this!
+    // public RouteFinder obj;
+
     public RouteFinder (Maze mazee) throws NoRouteFoundException {
-        maze = mazee;
+        //!!!void?!!!
+        this.maze = mazee;
         // System.out.println("Successfully get maze!");
         // System.out.println(route.empty());
         // Tile testcase = maze.getEntrance();
@@ -29,23 +47,23 @@ public class RouteFinder{
         // System.out.println(testcase.toString());
 
         // Clock-wise finding...
-        Tile entrance = maze.getEntrance();
+        Tile entrance = this.maze.getEntrance();
         Tile temp = entrance;
         Tile next;
-        route.push(entrance);
+        this.route.push(entrance);
         while (isFinished() == false){
-            next = maze.getAdjacentTile(temp,Maze.Direction.NORTH);
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.NORTH);
             if(next != null){
                 if(next.toString() == "x"){
-                    route.push(next);
-                    finished = true;
+                    this.route.push(next);
+                    this.finished = true;
                     temp = next;
                     break;
                 }else if(next.toString() == "."){
-                    if(blackList.contains(next) || route.search(next) != -1 ){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
                         // continue;
                     }else{
-                        route.push(next);
+                        this.route.push(next);
                         temp = next;
                         continue;
                     }
@@ -54,19 +72,19 @@ public class RouteFinder{
             }
 
 
-            next = maze.getAdjacentTile(temp,Maze.Direction.EAST);
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.EAST);
             if(next != null){
                 // System.out.println("east");
                 if(next.toString() == "x"){
-                    route.push(next);
-                    finished = true;
+                    this.route.push(next);
+                    this.finished = true;
                     temp = next;
                     break;
                 }else if(next.toString() == "."){
-                    if(blackList.contains(next) || route.search(next) != -1 ){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
                         // continue;
                     }else{
-                        route.push(next);
+                        this.route.push(next);
                         temp = next;
                         continue;
                     }
@@ -75,19 +93,19 @@ public class RouteFinder{
             }
 
     
-            next = maze.getAdjacentTile(temp,Maze.Direction.SOUTH);
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.SOUTH);
             if(next != null){
                 // System.out.println("south");
                 if(next.toString() == "x"){
-                    route.push(next);
-                    finished = true;
+                    this.route.push(next);
+                    this.finished = true;
                     temp = next;
                     break;
                 }else if(next.toString() == "."){
-                    if(blackList.contains(next) || route.search(next) != -1 ){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
                         // continue;
                     }else{
-                        route.push(next);
+                        this.route.push(next);
                         temp = next;
                         // System.out.println("GO HERE!");
                         continue;
@@ -97,18 +115,18 @@ public class RouteFinder{
             }
 
         
-            next = maze.getAdjacentTile(temp,Maze.Direction.WEST);
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.WEST);
             if(next != null){
                 if(next.toString() == "x"){
-                    route.push(next);
-                    finished = true;
+                    this.route.push(next);
+                    this.finished = true;
                     temp = next;
                     break;
                 }else if(next.toString() == "."){
-                    if(blackList.contains(next) || route.search(next) != -1 ){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
                         // continue;
                     }else{
-                        route.push(next);
+                        this.route.push(next);
                         temp = next;
                         continue;
                     }
@@ -119,22 +137,29 @@ public class RouteFinder{
 
 
             // the very buttom option...
-            if (route.size()==1){
+            if (this.route.size()==1){
                 throw new NoRouteFoundException("No Route Found, please check your maze again.");
             }else{
-                blackList.add(route.pop());
-                temp = route.peek();
+                this.blackList.add(this.route.pop());
+                temp = this.route.peek();
             }
 
 
         }
 
-            System.out.println(route.size());
-            System.out.println(route);
-            System.out.println(blackList);        
+        System.out.println(this.route.size());
+        System.out.println(this.route);
+        System.out.println(this.blackList);   
+        // this.save("saved");
         
+        // obj = this;
 
     }
+
+    // public RouteFinder getFinderObject(){
+    //     return obj;
+    // }
+
 
     public Maze getMaze(){
         return maze;
@@ -152,12 +177,42 @@ public class RouteFinder{
         }
     }
 
-    public static RouteFinder load(String str){
-        return null;
+    public static RouteFinder load(String str) {
+        try (
+            ObjectInputStream objectStream = new ObjectInputStream(
+                new FileInputStream( str + ".obj")
+            );
+        ) {
+            System.out.println("Loading Successful!");
+            return (RouteFinder)objectStream.readObject();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Could not read " + str +".obj");
+            return null;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error: problem when reading "+ str +".obj");
+            return null;
+        }
+
     }
 
-    public void save(String str){
-
+    public void save(String str) throws IOException{
+        ObjectOutputStream objectStream = null;
+        try {
+            objectStream = new ObjectOutputStream(new FileOutputStream( str + ".obj" ));
+            // System.out.println(this.isFinished());
+            objectStream.writeObject(this);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Could not open " + str +".obj for writing.");
+        } catch (IOException e) {
+            System.out.println("Error: IOException when writing " + str +".obj");
+            throw new IOException("Ooops, some thing went wrong.", e);
+        } finally {
+            try {
+                objectStream.close();
+            } catch (IOException e) {
+                System.out.println("Error: IOException when closing " + str + ".obj");
+            }
+        }
     }
 
     public boolean step(){
@@ -165,7 +220,30 @@ public class RouteFinder{
     }
 
     public String toString(){
-        return "";
+        // String a = new String();
+
+        String all = "";
+        for (int i = this.maze.lineno-1; i >= 0; i--){
+            String split = "";
+            for (int ii = 0; ii < this.maze.colno; ii ++){
+                
+                // this.blackList.contains(next) || this.route.search(next) != -1
+                if (   this.blackList.contains(  this.maze.getTileAtLocation(this.maze.setCoord(i,ii))  )   ){
+                    split = split + "-";
+                }else if (  this.route.search(  this.maze.getTileAtLocation(this.maze.setCoord(i,ii))  ) != -1  ){
+                    split = split + "*";
+                }else {
+                    split = split + this.maze.getTileAtLocation(this.maze.setCoord(i,ii)).toString();
+                }
+
+            }
+            if (i != 0){
+                split = split + "\n";
+            }
+            all = all + split;
+        }
+        return all;
+
     }
 
 }

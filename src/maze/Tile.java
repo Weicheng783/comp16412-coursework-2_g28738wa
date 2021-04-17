@@ -1,12 +1,14 @@
 package maze;
 
+import java.io.Serializable;
+
 /**
  * Tile class
  * @author Weicheng Ao
  * @version 1.0
  * @since 1.0
  */
-public class Tile{
+public class Tile implements Serializable{
     private Type type;
 
     protected Maze.Coordinate coords;

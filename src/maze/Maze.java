@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 /**
  * Maze class
@@ -17,7 +18,7 @@ import java.io.PrintWriter;
  * @version 1.0
  * @since 1.0
  */
-public class Maze {
+public class Maze implements Serializable{
     private Tile entrance;
     private Tile exit;
     private List<List<Tile>> tiles = new LinkedList<>();
@@ -28,8 +29,8 @@ public class Maze {
 
     // private static Tile[][] tiless;
 
-    private static int lineno = 0;
-    private static int colno = 0;
+    public static int lineno = 0;
+    public static int colno = 0;
     private static boolean firstenter = true;
     private static int noofchars = 0;
 
@@ -284,7 +285,7 @@ public class Maze {
     /**
      * This class is a nested class in Maze class, it serves the coordinates part. 
      */
-    class Coordinate{
+    class Coordinate implements Serializable{
 
         private int x;
         private int y;
