@@ -149,17 +149,9 @@ public class RouteFinder implements Serializable{
 
         System.out.println(this.route.size());
         System.out.println(this.route);
-        System.out.println(this.blackList);   
-        // this.save("saved");
-        
-        // obj = this;
+        System.out.println(this.blackList);
 
     }
-
-    // public RouteFinder getFinderObject(){
-    //     return obj;
-    // }
-
 
     public Maze getMaze(){
         return maze;

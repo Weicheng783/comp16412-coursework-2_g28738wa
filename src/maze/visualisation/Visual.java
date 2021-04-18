@@ -1,6 +1,8 @@
-import maze.*;
-import maze.routing.*;
-import maze.visualisation.*;
+// package maze.visualisation;
+
+// import maze.*;
+// import maze.routing.*;
+// import maze.visualisation.*;
 
 import javafx.application.Application;
 
@@ -8,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import java.io.Serializable;
 
 import javafx.event.ActionEvent;
 
@@ -34,7 +38,7 @@ import javafx.scene.input.KeyEvent;
 
 //so the whole scene’s backgroundcolor is Green, We put three Blue Vboxes on it which covers the top half of //the scene,  so that the rest part of the scene remains green which is the second rectangle showing in //the example. 
 
-public class MazeApplication extends Application{  
+public class Visual extends Application implements Serializable{  
 	public List<Rectangle> many = new LinkedList<> ();
 	public List<HBox> boxes = new LinkedList<> ();
 
