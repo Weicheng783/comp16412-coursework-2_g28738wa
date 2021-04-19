@@ -1,8 +1,8 @@
-// package maze.visualisation;
+package maze.visualisation;
 
-// import maze.*;
-// import maze.routing.*;
-// import maze.visualisation.*;
+import maze.*;
+import maze.routing.*;
+import maze.visualisation.*;
 
 import javafx.application.Application;
 
@@ -36,14 +36,24 @@ import javafx.geometry.Pos;
 
 import javafx.scene.input.KeyEvent;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
+// import java.awt.Desktop;
+import java.awt.EventQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
+
 //so the whole scene’s backgroundcolor is Green, We put three Blue Vboxes on it which covers the top half of //the scene,  so that the rest part of the scene remains green which is the second rectangle showing in //the example. 
 
 public class Visual extends Application implements Serializable{  
 	public List<Rectangle> many = new LinkedList<> ();
 	public List<HBox> boxes = new LinkedList<> ();
+    // private final Desktop desktop = Desktop.getDesktop();
 
 @Override
-public void start (Stage stage) {  
+public void start (Stage stage) throws InvalidMazeException, IOException {
 // int status = 0;
 // BorderPane bp = new BorderPane();
 
@@ -51,11 +61,50 @@ public void start (Stage stage) {
 
 // AnchorPane ap = new AnchorPane();
 
+
+FileChooser fileChooser = new FileChooser();
+
+
 Button loadMap = new Button();
 loadMap.setText("Load Map");
 loadMap.setOnAction(e->{
 	// @Override
 	System.out.println("Load Map Button.");
+    fileChooser.setTitle("Select a Maze");
+    fileChooser.getExtensionFilters().addAll(
+        new FileChooser.ExtensionFilter("TXT", "*.txt")
+    );
+    File file = fileChooser.showOpenDialog(stage);
+
+    if(file != null){
+        // try{
+            // desktop.open(file);
+        System.out.println("The file has opened!");
+
+        try{
+            Maze test = Maze.fromTxt(file.getAbsolutePath());
+            System.out.println(test.toString());
+            // test.setMaze();
+            RouteFinder bbb = new RouteFinder(test);
+            System.out.println(bbb.isFinished());
+            bbb.save("savedmazetest");
+            RouteFinder ccc = bbb.load("savedmazetest");
+            System.out.println( ccc.toString() );
+        }catch(IOException ex){
+            System.out.println("Error: IOException happened.");
+        }catch(InvalidMazeException ex){
+            System.out.println("Error: InvalidMazeException happened.");
+        }catch(NoRouteFoundException ex){
+            System.out.println("Error: The given maze has no solution found, please check your maze.");
+        }
+
+
+        // }
+        // catch(IOException ex){
+        //     Logger.getLogger(Visual.class.getName()).log(Level.SEVERE,null,ex);
+        // }
+    }
+
 });
 
 
@@ -116,6 +165,9 @@ step.setOnAction(e->{
 // root3.setStyle("-fx-background-color:Blue");
 // root3.setAlignment(Pos.TOP_RIGHT);
 // root3.getChildren().addAll(c1);
+
+
+
 for(int j=0; j<10; j++){ //hang shu
 	for(int i=0; i<20; i++){ //lie shu
 		Rectangle R1 = new Rectangle (20,30,20,30); 
@@ -238,6 +290,7 @@ stage.setTitle("Maze");
 stage.show();  
 
 } 
+
 
  public static void main(String args[]) { 
 	launch(args);
