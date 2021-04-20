@@ -50,6 +50,7 @@ import java.io.IOException;
 public class Visual extends Application implements Serializable{  
 	public List<Rectangle> many = new LinkedList<> ();
 	public List<HBox> boxes = new LinkedList<> ();
+    public Maze test;
     // private final Desktop desktop = Desktop.getDesktop();
 
 @Override
@@ -82,7 +83,8 @@ loadMap.setOnAction(e->{
         System.out.println("The file has opened!");
 
         try{
-            Maze test = Maze.fromTxt(file.getAbsolutePath());
+            test = Maze.fromTxt(file.getAbsolutePath());
+            // this.test = test;
             System.out.println(test.toString());
             // test.setMaze();
             RouteFinder bbb = new RouteFinder(test);
@@ -90,6 +92,9 @@ loadMap.setOnAction(e->{
             bbb.save("savedmazetest");
             RouteFinder ccc = bbb.load("savedmazetest");
             System.out.println( ccc.toString() );
+            loadMaze();
+            // test = null;
+            start(stage);
         }catch(IOException ex){
             System.out.println("Error: IOException happened.");
         }catch(InvalidMazeException ex){
@@ -168,30 +173,7 @@ step.setOnAction(e->{
 
 
 
-for(int j=0; j<10; j++){ //hang shu
-	for(int i=0; i<20; i++){ //lie shu
-		Rectangle R1 = new Rectangle (20,30,20,30); 
-		R1.setFill (Color.SLATEBLUE); 
-		R1.setArcHeight(15);
-		R1.setArcWidth(15);
-		// R1.setArcWidth(10);
-		Rectangle R2 = new Rectangle (20,30,20,30); 
-		R2.setFill(Color.GREEN);
-		R2.setArcHeight(15);
-		R2.setArcWidth(15);
-
-		many.add(R1);
-		many.add(R2);
-	}
-	HBox a = new HBox();
-	a.setAlignment(Pos.CENTER);
-	a.getChildren().addAll(many);
-	many.clear();
-	boxes.add(a);
-
-}
-
-
+// loadMaze();
 
 // Rectangle R1 = new Rectangle (30,40,30,40); 
 
@@ -295,5 +277,61 @@ stage.show();
  public static void main(String args[]) { 
 	launch(args);
  }
+
+public void loadMaze(){
+    boxes.clear();
+
+    for(int i=test.lineno-1; i>=0; i--){ //hang shu
+        for(int ii=0; ii<test.colno; ii++){ //lie shu
+
+            // // R1.setArcWidth(10);
+            // Rectangle R2 = new Rectangle (20,30,20,30); 
+            // R2.setFill(Color.GREEN);
+            // R2.setArcHeight(15);
+            // R2.setArcWidth(15);
+
+            // many.add(R1);
+            // many.add(R2);
+            if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "#"){
+                Rectangle R1 = new Rectangle (20,30,20,30); 
+                R1.setFill (Color.SLATEBLUE); 
+                R1.setArcHeight(15);
+                R1.setArcWidth(15);
+                many.add(R1);
+            }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "."){
+                Rectangle R1 = new Rectangle (20,30,20,30); 
+                R1.setFill (Color.BLACK); 
+                R1.setArcHeight(15);
+                R1.setArcWidth(15);
+                many.add(R1);           
+            }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "x"){
+                Rectangle R1 = new Rectangle (20,30,20,30); 
+                R1.setFill (Color.GREEN); 
+                R1.setArcHeight(15);
+                R1.setArcWidth(15);
+                many.add(R1);              
+            }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "e"){
+                Rectangle R1 = new Rectangle (20,30,20,30); 
+                R1.setFill (Color.PURPLE); 
+                R1.setArcHeight(15);
+                R1.setArcWidth(15);
+                many.add(R1);              
+            }else{
+                Rectangle R1 = new Rectangle (20,30,20,30); 
+                R1.setFill (Color.RED); 
+                R1.setArcHeight(15);
+                R1.setArcWidth(15);
+                many.add(R1);            
+            }
+
+        }
+        HBox a = new HBox();
+        a.setAlignment(Pos.CENTER);
+        a.getChildren().addAll(many);
+        many.clear();
+        boxes.add(a);
+
+    }
+}
 
 }
