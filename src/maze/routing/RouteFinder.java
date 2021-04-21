@@ -32,7 +32,7 @@ public class RouteFinder implements Serializable{
     // public void RouteFinder(){};//!!!notice this!
     // public RouteFinder obj;
 
-    public RouteFinder (Maze mazee) throws NoRouteFoundException {
+    public RouteFinder (Maze mazee) {
         //!!!void?!!!
         this.maze = mazee;
         // System.out.println("Successfully get maze!");
@@ -45,112 +45,7 @@ public class RouteFinder implements Serializable{
         // System.out.println(route.empty());
         // System.out.println(route.search(testcase));
         // System.out.println(testcase.toString());
-
-        // Clock-wise finding...
-        Tile entrance = this.maze.getEntrance();
-        Tile temp = entrance;
-        Tile next;
-        this.route.push(entrance);
-        while (isFinished() == false){
-            next = this.maze.getAdjacentTile(temp,Maze.Direction.NORTH);
-            if(next != null){
-                if(next.toString() == "x"){
-                    this.route.push(next);
-                    this.finished = true;
-                    temp = next;
-                    break;
-                }else if(next.toString() == "."){
-                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
-                    }else{
-                        this.route.push(next);
-                        temp = next;
-                        continue;
-                    }
-
-                }
-            }
-
-
-            next = this.maze.getAdjacentTile(temp,Maze.Direction.EAST);
-            if(next != null){
-                // System.out.println("east");
-                if(next.toString() == "x"){
-                    this.route.push(next);
-                    this.finished = true;
-                    temp = next;
-                    break;
-                }else if(next.toString() == "."){
-                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
-                    }else{
-                        this.route.push(next);
-                        temp = next;
-                        continue;
-                    }
-
-                }
-            }
-
-    
-            next = this.maze.getAdjacentTile(temp,Maze.Direction.SOUTH);
-            if(next != null){
-                // System.out.println("south");
-                if(next.toString() == "x"){
-                    this.route.push(next);
-                    this.finished = true;
-                    temp = next;
-                    break;
-                }else if(next.toString() == "."){
-                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
-                    }else{
-                        this.route.push(next);
-                        temp = next;
-                        // System.out.println("GO HERE!");
-                        continue;
-                    }
-
-                }
-            }
-
         
-            next = this.maze.getAdjacentTile(temp,Maze.Direction.WEST);
-            if(next != null){
-                if(next.toString() == "x"){
-                    this.route.push(next);
-                    this.finished = true;
-                    temp = next;
-                    break;
-                }else if(next.toString() == "."){
-                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
-                    }else{
-                        this.route.push(next);
-                        temp = next;
-                        continue;
-                    }
-
-                }
-            }
-
-
-
-            // the very buttom option...
-            if (this.route.size()==1){
-                throw new NoRouteFoundException("No Route Found, please check your maze again.");
-            }else{
-                this.blackList.add(this.route.pop());
-                temp = this.route.peek();
-            }
-
-
-        }
-
-        System.out.println(this.route.size());
-        System.out.println(this.route);
-        System.out.println(this.blackList);
-
     }
 
     public Maze getMaze(){
@@ -207,8 +102,116 @@ public class RouteFinder implements Serializable{
         }
     }
 
-    public boolean step(){
-        return false;
+    public boolean step() throws NoRouteFoundException{
+        // Clock-wise finding...
+        Tile entrance = this.maze.getEntrance();
+        Tile temp = entrance;
+        Tile next;
+        this.route.push(entrance);
+        if (isFinished() == false){
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.NORTH);
+            if(next != null){
+                if(next.toString() == "x"){
+                    this.route.push(next);
+                    this.finished = true;
+                    temp = next;
+                    return true;
+                }else if(next.toString() == "."){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
+                        // continue;
+                    }else{
+                        this.route.push(next);
+                        temp = next;
+                        return false;
+                    }
+
+                }
+            }
+
+
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.EAST);
+            if(next != null){
+                // System.out.println("east");
+                if(next.toString() == "x"){
+                    this.route.push(next);
+                    this.finished = true;
+                    temp = next;
+                    return true;
+                }else if(next.toString() == "."){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
+                        // continue;
+                    }else{
+                        this.route.push(next);
+                        temp = next;
+                        return false;
+                    }
+
+                }
+            }
+
+    
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.SOUTH);
+            if(next != null){
+                // System.out.println("south");
+                if(next.toString() == "x"){
+                    this.route.push(next);
+                    this.finished = true;
+                    temp = next;
+                    return true;
+                }else if(next.toString() == "."){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
+                        // continue;
+                    }else{
+                        this.route.push(next);
+                        temp = next;
+                        // System.out.println("GO HERE!");
+                        return false;
+                    }
+
+                }
+            }
+
+        
+            next = this.maze.getAdjacentTile(temp,Maze.Direction.WEST);
+            if(next != null){
+                if(next.toString() == "x"){
+                    this.route.push(next);
+                    this.finished = true;
+                    temp = next;
+                    return true;
+                }else if(next.toString() == "."){
+                    if(this.blackList.contains(next) || this.route.search(next) != -1 ){
+                        // continue;
+                    }else{
+                        this.route.push(next);
+                        temp = next;
+                        return false;
+                    }
+
+                }
+            }
+
+
+
+            // the very buttom option...
+            if (this.route.size()==1){
+                throw new NoRouteFoundException("No Route Found, please check your maze again.");
+            }else{
+                this.blackList.add(this.route.pop());
+                temp = this.route.peek();
+
+            }
+            
+            return false;
+            
+        }else{
+            System.out.println("The maze is solved now, no more step.");
+            return true;
+        }
+
+        // System.out.println(this.route.size());
+        // System.out.println(this.route);
+        // System.out.println(this.blackList);
     }
 
     public String toString(){

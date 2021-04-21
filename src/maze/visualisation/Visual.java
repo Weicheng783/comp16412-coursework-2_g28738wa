@@ -73,6 +73,12 @@ public class Visual implements Serializable{
         Rectangle RTG = new Rectangle (20,30,20,30); 
         return RTG;
     }
+
+    public static Text text(){
+        Text text = new Text(20, 30, "");
+        text.setFont(new Font(20));
+        return text;
+    }
     // public Scene scene(){
     //     Scene scene = new Scene(group); 
 

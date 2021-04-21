@@ -46,8 +46,10 @@ import java.io.IOException;
 //so the whole scene’s backgroundcolor is Green, We put three Blue Vboxes on it which covers the top half of //the scene,  so that the rest part of the scene remains green which is the second rectangle showing in //the example. 
 
 public class MazeApplication extends Application implements Serializable{  
-	public List<Rectangle> many = new LinkedList<> ();
+	public List<HBox> many = new LinkedList<> ();
 	public List<HBox> boxes = new LinkedList<> ();
+    // public List<Text> textList = new LinkedList<> ();
+    // public List<Rectangle> rectangleList = new LinkedList<> ();
     public Maze test;
     // private final Desktop desktop = Desktop.getDesktop();
 
@@ -76,7 +78,7 @@ public class MazeApplication extends Application implements Serializable{
         Button loadMap = Visual.btn();
         loadMap.setText("Load Map");
         loadMap.setOnAction(e->{
-            // @Override
+
             System.out.println("Load Map Button.");
             fileChooser.setTitle("Select a Maze");
             fileChooser.getExtensionFilters().addAll(
@@ -85,8 +87,7 @@ public class MazeApplication extends Application implements Serializable{
             File file = fileChooser.showOpenDialog(stage);
 
             if(file != null){
-                // try{
-                    // desktop.open(file);
+
                 System.out.println("The file has opened!");
 
                 try{
@@ -107,16 +108,13 @@ public class MazeApplication extends Application implements Serializable{
                 }catch(InvalidMazeException ex){
                     System.out.println("Error: InvalidMazeException happened.");
 
-
-                }catch(NoRouteFoundException ex){
-                    System.out.println("Error: The given maze has no solution found, please check your maze.");
                 }
+                
+                // catch(NoRouteFoundException ex){
+                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
+                // }
 
 
-                // }
-                // catch(IOException ex){
-                //     Logger.getLogger(Visual.class.getName()).log(Level.SEVERE,null,ex);
-                // }
             }
 
         });
@@ -143,58 +141,6 @@ public class MazeApplication extends Application implements Serializable{
             System.out.println("Step Button.");
         });
 
-        // Circle c1 = new Circle (30); 
-
-        // c1.setFill (Color.YELLOW); 
-
-        // c1.setAlignment(Pos.TOP_RIGHT);
-        // c1.setCenterX(600);
-        // c1.setCenterY(0);
-        // ap.getChildren().add(c1); 
-        // ap.setLeftAnchor(c1, 10.0); 
-
-        // This is the roof (Triangle) 
-
-        // Polygon p1 = new Polygon (); 
-
-        // p1.getPoints().addAll(new Double[]{ 
-        // 150.0,50.0, 
-
-        // 80.0,200.0, 
-
-        // 220.0,200.0}); 
-
-        // p1.setFill (Color.RED); 
-
-
-        // This is the house (Rectangle) 
-
-        // Rectangle R1 = new Rectangle (140,130,140,130); 
-
-        // R1.setFill (Color.WHITE); 
-
-
-        // This implements the VBox for the whole window. 
-        // VBox root3 = new VBox();
-        // root3.setStyle("-fx-background-color:Blue");
-        // root3.setAlignment(Pos.TOP_RIGHT);
-        // root3.getChildren().addAll(c1);
-
-
-
-        // loadMaze();
-
-        // Rectangle R1 = new Rectangle (30,40,30,40); 
-
-        // R1.setArcWidth(15);
-        // R1.setArcHeight(15);
-        // // R1.setFill (Color.SLATEBLUE); 
-        // // R1.setStyle(" -fx-background-color: Green; -fx-border-radius:10;");
-        // // Rectangle R1 = new Rectangle (20,30,20,30); 
-        // R1.setFill(Color.PURPLE);
-
-        // Rectangle R2 = new Rectangle (20,30,20,30); 
-        // R2.setFill (Color.GREEN); 
 
         VBox maze = Visual.vbox(); 
         maze.setAlignment(Pos.CENTER); 
@@ -217,39 +163,6 @@ public class MazeApplication extends Application implements Serializable{
         //bp.setLeft(leftVbox);
         VBox group = Visual.vbox();
         group.getChildren().addAll(root,root2);
-        // bp.setRight(root);
-
-        // VBox subroot = new VBox(0);
-
-        // subroot.setBackground(Background.EMPTY);
-        // subroot.setAlignment(Pos.CENTER);
-        // subroot.getChildren().addAll(); 
-
-        // R1.setOnMouseClicked(e->{
-        // 	System.out.println("Clicked! "+ root.getStyle());
-        // 	if (root.getStyle()=="-fx-background-color:Blue"){
-        // 		root.setStyle("-fx-background-color:Black");
-        // 		root3.setStyle("-fx-background-color:Black");
-        // 		c1.setFill (Color.WHITE); 
-        // 	}else{
-        // 		root.setStyle("-fx-background-color:Blue");
-        // 		root3.setStyle("-fx-background-color:Blue");
-        // 		c1.setFill (Color.YELLOW); 
-
-        // 	}
-        // 	// 	if (status == 0){
-        // 	// 	System.out.println("0-1");
-        // 	// 	status = 1;
-        // 	// }else{
-        // 	// 	System.out.println("1-0");
-        // 	// 	status = 0;
-
-        // 	// }
-            
-        // 	// R1.setOnMouseClicked(e1-> {System.out.println("SEC Clicked!");});
-        //   }
-        // );
-
 
         // This is the scene 
 
@@ -279,44 +192,58 @@ public class MazeApplication extends Application implements Serializable{
         for(int i=test.lineno-1; i>=0; i--){ //hang shu
             for(int ii=0; ii<test.colno; ii++){ //lie shu
 
-                // // R1.setArcWidth(10);
-                // Rectangle R2 = new Rectangle (20,30,20,30); 
-                // R2.setFill(Color.GREEN);
-                // R2.setArcHeight(15);
-                // R2.setArcWidth(15);
-
-                // many.add(R1);
-                // many.add(R2);
                 if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "#"){
                     Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.SLATEBLUE); 
+                    R1.setFill (Color.web("#895B35")); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
-                    many.add(R1);
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);
                 }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "."){
                     Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.BLACK); 
+                    R1.setFill (Color.PINK); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
-                    many.add(R1);           
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);       
                 }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "x"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.GREEN); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
-                    many.add(R1);              
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);   
+                    // Text t = Visual.text();
+                    // t.setText("X");
+                    // t.setFont(new Font(15));
+                    // HBox HB = Visual.hbox();
+                    // HB.getChildren().addAll(t);
+                    // many.add(HB);   
                 }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "e"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.PURPLE); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
-                    many.add(R1);              
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);
+                    // Text t = Visual.text();
+                    // t.setText("e");
+                    // t.setFont(new Font(20));
+                    // HBox HB = Visual.hbox();
+                    // HB.getChildren().addAll(t);
+                    // many.add(HB);
                 }else{
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.RED); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
-                    many.add(R1);            
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);         
                 }
 
             }
