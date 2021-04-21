@@ -51,6 +51,8 @@ public class MazeApplication extends Application implements Serializable{
     // public List<Text> textList = new LinkedList<> ();
     // public List<Rectangle> rectangleList = new LinkedList<> ();
     public Maze test;
+
+    public RouteFinder Route;
     // private final Desktop desktop = Desktop.getDesktop();
 
 
@@ -93,13 +95,14 @@ public class MazeApplication extends Application implements Serializable{
                 try{
                     test = Maze.fromTxt(file.getAbsolutePath());
                     // this.test = test;
+                    System.out.println(file.getAbsolutePath());
                     System.out.println(test.toString());
                     // test.setMaze();
-                    RouteFinder bbb = new RouteFinder(test);
-                    System.out.println(bbb.isFinished());
-                    bbb.save("savedmazetest");
-                    RouteFinder ccc = bbb.load("savedmazetest");
-                    System.out.println( ccc.toString() );
+                    Route = new RouteFinder(test);
+                    // System.out.println(bbb.isFinished());
+                    // bbb.save("savedmazetest");
+                    // RouteFinder ccc = bbb.load("savedmazetest");
+                    // System.out.println( ccc.toString() );
                     loadMaze();
                     // test = null;
                     start(stage);
@@ -125,6 +128,52 @@ public class MazeApplication extends Application implements Serializable{
         loadRt.setOnAction(e->{
 
             System.out.println("Load Route Button.");
+            FileChooser objfileChooser = Visual.filechooser();
+            
+            objfileChooser.setTitle("Select a RouteFinder object (.obj)");
+            objfileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("OBJ", "*.obj")
+            );
+            File objfile = objfileChooser.showOpenDialog(stage);
+
+            if(objfile != null){
+
+                System.out.println("The objfile has opened!");
+
+                try{
+                    Route = Route.load(objfile.getAbsolutePath());
+                    test = Route.getMaze();
+
+                    // System.out.println(test.toString());
+
+                    // Route = new RouteFinder(test);
+                    System.out.println(test.toString());
+                    if(test == null){
+                        System.out.println("test is empty");
+                    }else{
+                        System.out.println(test.toString());
+                    }
+                    System.out.println(Route.toString());    
+                    System.out.println(Route.getBlackList().toString()); 
+                    System.out.println(Route.getRoute().toString()); 
+                    updateRoute();
+                    start(stage);
+                }catch(IOException ex){
+                    System.out.println("Error: IOException happened.");
+                }catch(InvalidMazeException ex){
+                    System.out.println("Error: InvalidMazeException happened.");
+
+                }
+                
+                // catch(NoRouteFoundException ex){
+                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
+                // }
+
+
+            }else{
+                System.out.println("No objfile is loaded or the objfile is empty.");
+            }           
+
         });
 
         Button saveRt = Visual.btn();
@@ -132,13 +181,70 @@ public class MazeApplication extends Application implements Serializable{
         saveRt.setOnAction(e->{
 
             System.out.println("Save Route Button.");
+     
+
+            if(Route != null){
+                FileChooser objfileSaver = Visual.filechooser();
+                
+                objfileSaver.setTitle("Select a place to save the RouteFinder object (.obj)");
+                // objfileSaver.getExtensionFilters().addAll(
+                //     new FileChooser.ExtensionFilter("OBJ", "*.obj")
+                // );
+                File savefile = objfileSaver.showSaveDialog(stage);
+
+                System.out.println(savefile.getAbsolutePath()+".obj");
+                System.out.println("The objfile has opened!");
+
+                try{
+                    Route.save(savefile.getAbsolutePath()+".obj");
+
+                    // System.out.println(test.toString());
+
+                    // Route = new RouteFinder(test);
+ 
+                    // updateRoute();
+                    start(stage);
+                }catch(IOException ex){
+                    System.out.println("Error: IOException happened.");
+                }catch(InvalidMazeException ex){
+                    System.out.println("Error: InvalidMazeException happened.");
+
+                }
+                
+                // catch(NoRouteFoundException ex){
+                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
+                // }
+
+
+            }else{
+                System.out.println("You wrote nothing to this file, this file is empty, so you can not do this.");
+            }                       
+
         });
 
         Button step = Visual.btn();
         step.setText("Step");
         step.setOnAction(e->{
-
             System.out.println("Step Button.");
+
+            if(Route != null){
+                try{
+                    Route.step();
+                    updateRoute();
+                    start(stage);
+                }catch(NoRouteFoundException ex){
+                    System.out.println("This particular maze has no route found after attempting several steps.");
+                }catch(InvalidMazeException ex){
+                    System.out.println("This maze is invalid, please check it again.");
+                }catch(IOException ex){
+                    System.out.println("IOException thrown.");
+                }
+
+            }else{
+                System.out.println("No maze map loaded.");
+            }
+  
+
         });
 
 
@@ -255,5 +361,117 @@ public class MazeApplication extends Application implements Serializable{
 
         }
     }
+
+    public void updateRoute(){
+
+        boxes.clear();
+
+        for(int i=Route.getMaze().lineno-1; i>=0; i--){ //hang shu
+            for(int ii=0; ii<Route.getMaze().colno; ii++){ //lie shu
+
+                if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "#"){
+                    Rectangle R1 = Visual.rectangle(); 
+                    R1.setFill (Color.web("#895B35")); 
+                    R1.setArcHeight(15);
+                    R1.setArcWidth(15);
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "."){
+                    if ( Route.getBlackList().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  )  ){
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.RED); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB);  
+                    }else if(  Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true  ){
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.GREEN); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB);
+                    }else{
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.PINK); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB);                          
+                    }
+     
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "x"){
+                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true ){
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.GREEN); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB); 
+                    }else{
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.BLUE); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB);                         
+                    }
+  
+                    // Text t = Visual.text();
+                    // t.setText("X");
+                    // t.setFont(new Font(15));
+                    // HBox HB = Visual.hbox();
+                    // HB.getChildren().addAll(t);
+                    // many.add(HB);   
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "e"){
+                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true ){
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.GREEN); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB); 
+                    }else{
+                        Rectangle R1 = Visual.rectangle(); 
+                        R1.setFill (Color.PURPLE); 
+                        R1.setArcHeight(15);
+                        R1.setArcWidth(15);
+                        HBox HB = Visual.hbox();
+                        HB.getChildren().addAll(R1);
+                        many.add(HB);                         
+                    }
+                    // Text t = Visual.text();
+                    // t.setText("e");
+                    // t.setFont(new Font(20));
+                    // HBox HB = Visual.hbox();
+                    // HB.getChildren().addAll(t);
+                    // many.add(HB);
+                }else{
+                    Rectangle R1 = Visual.rectangle(); 
+                    R1.setFill (Color.RED); 
+                    R1.setArcHeight(15);
+                    R1.setArcWidth(15);
+                    HBox HB = Visual.hbox();
+                    HB.getChildren().addAll(R1);
+                    many.add(HB);         
+                }
+
+            }
+            HBox a = Visual.hbox();
+            a.setAlignment(Pos.CENTER);
+            a.getChildren().addAll(many);
+            many.clear();
+            boxes.add(a);
+
+        }
+    }
+
 
 }

@@ -27,6 +27,12 @@ public class RouteFinder implements Serializable{
     private Stack<Tile> route = new Stack<> ();
     private boolean finished = false;
 
+    private boolean firstenter = true;
+
+    private Tile entrance;
+    private Tile temp;
+    private Tile next;
+
     private List<Tile> blackList= new LinkedList<> ();
 
     // public void RouteFinder(){};//!!!notice this!
@@ -35,6 +41,8 @@ public class RouteFinder implements Serializable{
     public RouteFinder (Maze mazee) {
         //!!!void?!!!
         this.maze = mazee;
+        entrance = this.maze.getEntrance();
+        temp = entrance;
         // System.out.println("Successfully get maze!");
         // System.out.println(route.empty());
         // Tile testcase = maze.getEntrance();
@@ -45,7 +53,7 @@ public class RouteFinder implements Serializable{
         // System.out.println(route.empty());
         // System.out.println(route.search(testcase));
         // System.out.println(testcase.toString());
-        
+
     }
 
     public Maze getMaze(){
@@ -54,6 +62,10 @@ public class RouteFinder implements Serializable{
 
     public List<Tile> getRoute(){
         return route;
+    }
+
+    public List<Tile> getBlackList(){
+        return blackList;
     }
 
     public boolean isFinished(){
@@ -67,47 +79,54 @@ public class RouteFinder implements Serializable{
     public static RouteFinder load(String str) {
         try (
             ObjectInputStream objectStream = new ObjectInputStream(
-                new FileInputStream( str + ".obj")
+                new FileInputStream( str )
             );
         ) {
             System.out.println("Loading Successful!");
             return (RouteFinder)objectStream.readObject();
         } catch (FileNotFoundException e) {
-            System.out.println("Error: Could not read " + str +".obj");
+            System.out.println("Error: Could not read " + str );
             return null;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error: problem when reading "+ str +".obj");
+            System.out.println("Error: problem when reading "+ str );
             return null;
         }
 
     }
 
+    // public void savepath(String str){
+    //     save(str);
+    // }
+
     public void save(String str) throws IOException{
         ObjectOutputStream objectStream = null;
         try {
-            objectStream = new ObjectOutputStream(new FileOutputStream( str + ".obj" ));
+            objectStream = new ObjectOutputStream(new FileOutputStream( str  ));
             // System.out.println(this.isFinished());
             objectStream.writeObject(this);
         } catch (FileNotFoundException e) {
-            System.out.println("Error: Could not open " + str +".obj for writing.");
+            System.out.println("Error: Could not open " + str +" for writing.");
         } catch (IOException e) {
-            System.out.println("Error: IOException when writing " + str +".obj");
+            System.out.println("Error: IOException when writing " + str );
             throw new IOException("Ooops, some thing went wrong.", e);
         } finally {
             try {
                 objectStream.close();
             } catch (IOException e) {
-                System.out.println("Error: IOException when closing " + str + ".obj");
+                System.out.println("Error: IOException when closing " + str );
             }
         }
     }
 
     public boolean step() throws NoRouteFoundException{
         // Clock-wise finding...
-        Tile entrance = this.maze.getEntrance();
-        Tile temp = entrance;
-        Tile next;
-        this.route.push(entrance);
+        if (firstenter == true){
+
+            this.route.push(entrance);
+            firstenter = false;
+            return false;
+        }
+
         if (isFinished() == false){
             next = this.maze.getAdjacentTile(temp,Maze.Direction.NORTH);
             if(next != null){
