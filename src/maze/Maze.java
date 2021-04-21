@@ -41,6 +41,7 @@ public class Maze implements Serializable{
      *  @return Return a Maze object if the layout of the maze is valid, otherwise throw exceptions.
      */
     public static Maze fromTxt(String path) throws InvalidMazeException {
+        firstenter = true;
 
         Maze a = new Maze();
         

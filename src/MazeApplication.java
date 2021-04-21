@@ -70,198 +70,200 @@ public class MazeApplication extends Application implements Serializable{
     public void start (Stage stage) throws InvalidMazeException, IOException {
 
 
-    FileChooser fileChooser = Visual.filechooser();
+        FileChooser fileChooser = Visual.filechooser();
 
 
-    Button loadMap = Visual.btn();
-    loadMap.setText("Load Map");
-    loadMap.setOnAction(e->{
-        // @Override
-        System.out.println("Load Map Button.");
-        fileChooser.setTitle("Select a Maze");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("TXT", "*.txt")
-        );
-        File file = fileChooser.showOpenDialog(stage);
+        Button loadMap = Visual.btn();
+        loadMap.setText("Load Map");
+        loadMap.setOnAction(e->{
+            // @Override
+            System.out.println("Load Map Button.");
+            fileChooser.setTitle("Select a Maze");
+            fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("TXT", "*.txt")
+            );
+            File file = fileChooser.showOpenDialog(stage);
 
-        if(file != null){
-            // try{
-                // desktop.open(file);
-            System.out.println("The file has opened!");
+            if(file != null){
+                // try{
+                    // desktop.open(file);
+                System.out.println("The file has opened!");
 
-            try{
-                test = Maze.fromTxt(file.getAbsolutePath());
-                // this.test = test;
-                System.out.println(test.toString());
-                // test.setMaze();
-                RouteFinder bbb = new RouteFinder(test);
-                System.out.println(bbb.isFinished());
-                bbb.save("savedmazetest");
-                RouteFinder ccc = bbb.load("savedmazetest");
-                System.out.println( ccc.toString() );
-                loadMaze();
-                // test = null;
-                start(stage);
-            }catch(IOException ex){
-                System.out.println("Error: IOException happened.");
-            }catch(InvalidMazeException ex){
-                System.out.println("Error: InvalidMazeException happened.");
-            }catch(NoRouteFoundException ex){
-                System.out.println("Error: The given maze has no solution found, please check your maze.");
+                try{
+                    test = Maze.fromTxt(file.getAbsolutePath());
+                    // this.test = test;
+                    System.out.println(test.toString());
+                    // test.setMaze();
+                    RouteFinder bbb = new RouteFinder(test);
+                    System.out.println(bbb.isFinished());
+                    bbb.save("savedmazetest");
+                    RouteFinder ccc = bbb.load("savedmazetest");
+                    System.out.println( ccc.toString() );
+                    loadMaze();
+                    // test = null;
+                    start(stage);
+                }catch(IOException ex){
+                    System.out.println("Error: IOException happened.");
+                }catch(InvalidMazeException ex){
+                    System.out.println("Error: InvalidMazeException happened.");
+
+
+                }catch(NoRouteFoundException ex){
+                    System.out.println("Error: The given maze has no solution found, please check your maze.");
+                }
+
+
+                // }
+                // catch(IOException ex){
+                //     Logger.getLogger(Visual.class.getName()).log(Level.SEVERE,null,ex);
+                // }
             }
 
-
-            // }
-            // catch(IOException ex){
-            //     Logger.getLogger(Visual.class.getName()).log(Level.SEVERE,null,ex);
-            // }
-        }
-
-    });
+        });
 
 
-    Button loadRt = Visual.btn();
-    loadRt.setText("Load Route");
-    loadRt.setOnAction(e->{
-        // @Override
-        System.out.println("Load Route Button.");
-    });
+        Button loadRt = Visual.btn();
+        loadRt.setText("Load Route");
+        loadRt.setOnAction(e->{
 
-    Button saveRt = Visual.btn();
-    saveRt.setText("Save Route");
-    saveRt.setOnAction(e->{
-        // @Override
-        System.out.println("Save Route Button.");
-    });
+            System.out.println("Load Route Button.");
+        });
 
-    Button step = Visual.btn();
-    step.setText("Step");
-    step.setOnAction(e->{
-        // @Override
-        System.out.println("Step Button.");
-    });
+        Button saveRt = Visual.btn();
+        saveRt.setText("Save Route");
+        saveRt.setOnAction(e->{
 
-    // Circle c1 = new Circle (30); 
+            System.out.println("Save Route Button.");
+        });
 
-    // c1.setFill (Color.YELLOW); 
+        Button step = Visual.btn();
+        step.setText("Step");
+        step.setOnAction(e->{
 
-    // c1.setAlignment(Pos.TOP_RIGHT);
-    // c1.setCenterX(600);
-    // c1.setCenterY(0);
-    // ap.getChildren().add(c1); 
-    // ap.setLeftAnchor(c1, 10.0); 
+            System.out.println("Step Button.");
+        });
 
-    // This is the roof (Triangle) 
+        // Circle c1 = new Circle (30); 
 
-    // Polygon p1 = new Polygon (); 
+        // c1.setFill (Color.YELLOW); 
 
-    // p1.getPoints().addAll(new Double[]{ 
-    // 150.0,50.0, 
+        // c1.setAlignment(Pos.TOP_RIGHT);
+        // c1.setCenterX(600);
+        // c1.setCenterY(0);
+        // ap.getChildren().add(c1); 
+        // ap.setLeftAnchor(c1, 10.0); 
 
-    // 80.0,200.0, 
+        // This is the roof (Triangle) 
 
-    // 220.0,200.0}); 
+        // Polygon p1 = new Polygon (); 
 
-    // p1.setFill (Color.RED); 
+        // p1.getPoints().addAll(new Double[]{ 
+        // 150.0,50.0, 
 
+        // 80.0,200.0, 
 
-    // This is the house (Rectangle) 
+        // 220.0,200.0}); 
 
-    // Rectangle R1 = new Rectangle (140,130,140,130); 
-
-    // R1.setFill (Color.WHITE); 
+        // p1.setFill (Color.RED); 
 
 
-    // This implements the VBox for the whole window. 
-    // VBox root3 = new VBox();
-    // root3.setStyle("-fx-background-color:Blue");
-    // root3.setAlignment(Pos.TOP_RIGHT);
-    // root3.getChildren().addAll(c1);
+        // This is the house (Rectangle) 
+
+        // Rectangle R1 = new Rectangle (140,130,140,130); 
+
+        // R1.setFill (Color.WHITE); 
+
+
+        // This implements the VBox for the whole window. 
+        // VBox root3 = new VBox();
+        // root3.setStyle("-fx-background-color:Blue");
+        // root3.setAlignment(Pos.TOP_RIGHT);
+        // root3.getChildren().addAll(c1);
 
 
 
-    // loadMaze();
+        // loadMaze();
 
-    // Rectangle R1 = new Rectangle (30,40,30,40); 
+        // Rectangle R1 = new Rectangle (30,40,30,40); 
 
-    // R1.setArcWidth(15);
-    // R1.setArcHeight(15);
-    // // R1.setFill (Color.SLATEBLUE); 
-    // // R1.setStyle(" -fx-background-color: Green; -fx-border-radius:10;");
-    // // Rectangle R1 = new Rectangle (20,30,20,30); 
-    // R1.setFill(Color.PURPLE);
+        // R1.setArcWidth(15);
+        // R1.setArcHeight(15);
+        // // R1.setFill (Color.SLATEBLUE); 
+        // // R1.setStyle(" -fx-background-color: Green; -fx-border-radius:10;");
+        // // Rectangle R1 = new Rectangle (20,30,20,30); 
+        // R1.setFill(Color.PURPLE);
 
-    // Rectangle R2 = new Rectangle (20,30,20,30); 
-    // R2.setFill (Color.GREEN); 
+        // Rectangle R2 = new Rectangle (20,30,20,30); 
+        // R2.setFill (Color.GREEN); 
 
-    VBox maze = Visual.vbox(); 
-    maze.setAlignment(Pos.CENTER); 
-    maze.getChildren().addAll(boxes);
-
-
-    VBox root = Visual.vbox(); 
-
-    // root.setBackground(1d2d2c); 
-    root.setStyle("-fx-background-color:White");
-
-    // root.setFill(Color.BLUE);
-    root.setAlignment(Pos.CENTER); 
-    root.getChildren().addAll(loadMap ,loadRt, saveRt, maze, step); 
-    // bp.setTop(root);
-
-    VBox root2 = Visual.vbox();
-
-    root2.getChildren().addAll();
-    //bp.setLeft(leftVbox);
-    VBox group = Visual.vbox();
-    group.getChildren().addAll(root,root2);
-    // bp.setRight(root);
-
-    // VBox subroot = new VBox(0);
-
-    // subroot.setBackground(Background.EMPTY);
-    // subroot.setAlignment(Pos.CENTER);
-    // subroot.getChildren().addAll(); 
-
-    // R1.setOnMouseClicked(e->{
-    // 	System.out.println("Clicked! "+ root.getStyle());
-    // 	if (root.getStyle()=="-fx-background-color:Blue"){
-    // 		root.setStyle("-fx-background-color:Black");
-    // 		root3.setStyle("-fx-background-color:Black");
-    // 		c1.setFill (Color.WHITE); 
-    // 	}else{
-    // 		root.setStyle("-fx-background-color:Blue");
-    // 		root3.setStyle("-fx-background-color:Blue");
-    // 		c1.setFill (Color.YELLOW); 
-
-    // 	}
-    // 	// 	if (status == 0){
-    // 	// 	System.out.println("0-1");
-    // 	// 	status = 1;
-    // 	// }else{
-    // 	// 	System.out.println("1-0");
-    // 	// 	status = 0;
-
-    // 	// }
-        
-    // 	// R1.setOnMouseClicked(e1-> {System.out.println("SEC Clicked!");});
-    //   }
-    // );
+        VBox maze = Visual.vbox(); 
+        maze.setAlignment(Pos.CENTER); 
+        maze.getChildren().addAll(boxes);
 
 
-    // This is the scene 
+        VBox root = Visual.vbox(); 
 
-    Scene scene = new Scene(group); 
-    //,  600, 500, Color.GREEN
+        // root.setBackground(1d2d2c); 
+        root.setStyle("-fx-background-color:White");
 
-    // Scene sceneb = new Scene(bp,  600, 500, Color.GREEN); 
+        // root.setFill(Color.BLUE);
+        root.setAlignment(Pos.CENTER); 
+        root.getChildren().addAll(loadMap ,loadRt, saveRt, maze, step); 
+        // bp.setTop(root);
 
-    stage.setScene(scene); 
-    // stage.setScene(sceneb);   
+        VBox root2 = Visual.vbox();
 
-    stage.setTitle("Maze");  
+        root2.getChildren().addAll();
+        //bp.setLeft(leftVbox);
+        VBox group = Visual.vbox();
+        group.getChildren().addAll(root,root2);
+        // bp.setRight(root);
 
-    stage.show();  
+        // VBox subroot = new VBox(0);
+
+        // subroot.setBackground(Background.EMPTY);
+        // subroot.setAlignment(Pos.CENTER);
+        // subroot.getChildren().addAll(); 
+
+        // R1.setOnMouseClicked(e->{
+        // 	System.out.println("Clicked! "+ root.getStyle());
+        // 	if (root.getStyle()=="-fx-background-color:Blue"){
+        // 		root.setStyle("-fx-background-color:Black");
+        // 		root3.setStyle("-fx-background-color:Black");
+        // 		c1.setFill (Color.WHITE); 
+        // 	}else{
+        // 		root.setStyle("-fx-background-color:Blue");
+        // 		root3.setStyle("-fx-background-color:Blue");
+        // 		c1.setFill (Color.YELLOW); 
+
+        // 	}
+        // 	// 	if (status == 0){
+        // 	// 	System.out.println("0-1");
+        // 	// 	status = 1;
+        // 	// }else{
+        // 	// 	System.out.println("1-0");
+        // 	// 	status = 0;
+
+        // 	// }
+            
+        // 	// R1.setOnMouseClicked(e1-> {System.out.println("SEC Clicked!");});
+        //   }
+        // );
+
+
+        // This is the scene 
+
+        Scene scene = new Scene(group); 
+        //,  600, 500, Color.GREEN
+
+        // Scene sceneb = new Scene(bp,  600, 500, Color.GREEN); 
+
+        stage.setScene(scene); 
+        // stage.setScene(sceneb);   
+
+        stage.setTitle("Maze");  
+
+        stage.show();  
 
     } 
 
@@ -271,6 +273,7 @@ public class MazeApplication extends Application implements Serializable{
     }
 
     public void loadMaze(){
+
         boxes.clear();
 
         for(int i=test.lineno-1; i>=0; i--){ //hang shu
