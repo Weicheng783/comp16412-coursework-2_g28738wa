@@ -237,9 +237,9 @@ public class RouteFinder implements Serializable{
         // String a = new String();
 
         String all = "";
-        for (int i = this.maze.lineno-1; i >= 0; i--){
+        for (int i = this.maze.getLineno()-1; i >= 0; i--){
             String split = "";
-            for (int ii = 0; ii < this.maze.colno; ii ++){
+            for (int ii = 0; ii < this.maze.getColno(); ii ++){
                 
                 // this.blackList.contains(next) || this.route.search(next) != -1
                 if (   this.blackList.contains(  this.maze.getTileAtLocation(this.maze.setCoord(i,ii))  )   ){

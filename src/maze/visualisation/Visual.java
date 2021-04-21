@@ -47,7 +47,7 @@ import java.io.IOException;
 
 public class Visual implements Serializable{  
     //extends Application
-
+    // public Maze maze;
 
     public static Button btn(){
         Button btn = new Button();
@@ -84,6 +84,9 @@ public class Visual implements Serializable{
 
     // }
 
+    // public void setMaze(Maze mazee){
+
+    // }
 
 
 }

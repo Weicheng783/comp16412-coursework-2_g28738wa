@@ -23,16 +23,18 @@ public class Maze implements Serializable{
     private Tile exit;
     private List<List<Tile>> tiles = new LinkedList<>();
 
-    private List<String> testt = new LinkedList<>();
+    public List<String> testt = new LinkedList<>();
+
+    public Maze myself;
 
 
-
-    // private static Tile[][] tiless;
 
     public static int lineno = 0;
     public static int colno = 0;
+
     private static boolean firstenter = true;
-    private static int noofchars = 0;
+    public static int noofchars = 0;
+
 
     private void Maze(){}
 
@@ -137,8 +139,18 @@ public class Maze implements Serializable{
         // throw new RaggedMazeException("HAHA GOOD! YOU THROWED AN EXCEPTION!");
         // System.out.println(lineno);
         // System.out.println(colno);
+        a.myself = a;
 
         return a;
+    }
+
+
+    public int getColno(){
+        return colno;
+    }
+
+    public int getLineno(){
+        return lineno;
     }
 
     /**
