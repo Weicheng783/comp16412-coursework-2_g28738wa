@@ -121,7 +121,7 @@ public class Maze implements Serializable{
 
             for(int m = lineno-1; m >= 0; m--){
                 for(int n = 0; n < a.tiles.get(m).size(); n++){
-                    a.tiles.get(lineno-1-m).get(n).coords = a.setCoord(m, n);
+                    a.tiles.get(lineno-1-m).get(n).coords = a.setCoord(n, m); //original m,n
                     colno = a.tiles.get(m).size();
                     // System.out.println(m+","+n+". Success!");
                 }
@@ -239,7 +239,7 @@ public class Maze implements Serializable{
      */
     public String toString(){
         String all = "";
-        for (int i = lineno-1; i >= 0; i--){
+        for (int i = getTiles().size()-1; i >= 0; i--){
             String split = "";
             for (int ii = 0; ii < colno; ii ++){
                 split = split + getTileAtLocation(setCoord(i,ii)).toString();
@@ -262,32 +262,32 @@ public class Maze implements Serializable{
      */
     public Tile getAdjacentTile(Tile tile, Direction dir){
         if(dir == Direction.SOUTH){
-            if(getTileLocation(tile).getX() == 0){
-                System.out.println("You can not go below this axis.");
-                return null;
-            }else{
-                return getTileAtLocation(setCoord( getTileLocation(tile).getX()-1 , getTileLocation(tile).getY() ));
-            }
-        }else if(dir == Direction.NORTH){
-           if(getTileLocation(tile).getX() == lineno-1){
-                System.out.println("You can not go beyond this axis.");
-                return null;
-            }else{
-                return getTileAtLocation(setCoord( getTileLocation(tile).getX()+1 , getTileLocation(tile).getY() ));
-            }
-        }else if(dir == Direction.WEST){
-           if(getTileLocation(tile).getY() == 0){
+            if(getTileLocation(tile).getY() == 0){
                 System.out.println("You can not go below this axis.");
                 return null;
             }else{
                 return getTileAtLocation(setCoord( getTileLocation(tile).getX() , getTileLocation(tile).getY()-1 ));
             }
-        }else if(dir == Direction.EAST){
-           if(getTileLocation(tile).getY() == colno-1){
+        }else if(dir == Direction.NORTH){
+           if(getTileLocation(tile).getY() == lineno-1){
                 System.out.println("You can not go beyond this axis.");
                 return null;
             }else{
                 return getTileAtLocation(setCoord( getTileLocation(tile).getX() , getTileLocation(tile).getY()+1 ));
+            }
+        }else if(dir == Direction.WEST){
+           if(getTileLocation(tile).getX() == 0){
+                System.out.println("You can not go below this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX()-1 , getTileLocation(tile).getY() ));
+            }
+        }else if(dir == Direction.EAST){
+           if(getTileLocation(tile).getX() == colno-1){
+                System.out.println("You can not go beyond this axis.");
+                return null;
+            }else{
+                return getTileAtLocation(setCoord( getTileLocation(tile).getX()+1 , getTileLocation(tile).getY() ));
             }
         }else{
             System.out.println("emmm, received no direction.");
@@ -314,7 +314,7 @@ public class Maze implements Serializable{
      * @param coords: Specific coordinate object.
      */
     public Tile getTileAtLocation(Coordinate coords){
-        return tiles.get(lineno-1-coords.getX()).get(coords.getY());
+        return tiles.get(tiles.size()-1-coords.getY()).get(coords.getX());
 
     }
 
@@ -334,13 +334,13 @@ public class Maze implements Serializable{
     /**
      * This class is a nested class in Maze class, it serves the coordinates part. 
      */
-    class Coordinate implements Serializable{
+    public class Coordinate implements Serializable{
 
         private int x;
         private int y;
 
         /** The constructor of the Coordinate class */
-        private Coordinate(int xx, int yy){
+        public Coordinate(int xx, int yy){
             // Coordinate a = new Coordinate();
             x = xx;
             y = yy;
@@ -358,7 +358,7 @@ public class Maze implements Serializable{
 
         /** Returns the string representation of the coordinates. */
         public String toString(){
-            return "(" + x + "," + y +")";
+            return "(" + x + ", " + y +")";
         }
 
     }

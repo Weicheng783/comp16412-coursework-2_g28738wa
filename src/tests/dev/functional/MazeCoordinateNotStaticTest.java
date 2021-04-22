@@ -118,6 +118,16 @@ public class MazeCoordinateNotStaticTest {
     }
 
     @Test
+    public void ensureGetEXITtile() {
+        Maze maze = setupForMaze1();
+        Maze.Coordinate coords = maze.new Coordinate(5, 1);
+        assertSame(
+            maze.getTileAtLocation(coords).getType(),
+            Tile.Type.EXIT
+        );
+    }
+
+    @Test
     public void ensureGetTileAtLocationBottomLeft() {
         Maze maze = setupForMaze1();
         Maze.Coordinate coords = maze.new Coordinate(0, 0);
