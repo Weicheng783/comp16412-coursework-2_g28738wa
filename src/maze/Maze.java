@@ -25,9 +25,6 @@ public class Maze implements Serializable{
 
     public List<String> testt = new LinkedList<>();
 
-    public Maze myself;
-
-
 
     public static int lineno = 0;
     public static int colno = 0;
@@ -36,7 +33,7 @@ public class Maze implements Serializable{
     public static int noofchars = 0;
 
 
-    private void Maze(){}
+    private Maze(){}
 
     /** import maze object from 'txt' file, stores Coordinates of each Tile object. 
      *  @param path: txt file path, it is a String object.
@@ -86,13 +83,13 @@ public class Maze implements Serializable{
 
                             if (line.toCharArray()[m] == 'e'){
                                 if(a.entrance == null){
-                                    a.setEntrance(temp);
+                                    a.entrance = temp;
                                 }else{
                                     throw new MultipleEntranceException("A maze can not have multiple entrance.");
                                 }
                             }else if(line.toCharArray()[m] == 'x'){
                                 if(a.exit == null){
-                                    a.setExit(temp);
+                                    a.exit = temp;
                                 }else{
                                     throw new MultipleExitException("A maze can not have multiple exit.");
                                 }
@@ -139,7 +136,6 @@ public class Maze implements Serializable{
         // throw new RaggedMazeException("HAHA GOOD! YOU THROWED AN EXCEPTION!");
         // System.out.println(lineno);
         // System.out.println(colno);
-        a.myself = a;
 
         return a;
     }
@@ -173,16 +169,58 @@ public class Maze implements Serializable{
      * Set a specific Maze's Entrance.
      * @param tile: The specific Maze's Entrance.
      */
-    private void setEntrance(Tile tile){
-        entrance = tile;
+    private void setEntrance(Tile tile) throws MultipleEntranceException{
+        try{
+            if(entrance == null){
+                for(int i=0; i<getTiles().size(); i++){
+                    if( getTiles().get(i).contains(tile) ){
+                        entrance = tile;
+                        break;
+                    }else{
+                        if(i == getTiles().size()-1){
+                            System.out.println("This tile is not in the Maze, so you can not setEntrance using this tile.");
+                        }
+                    }
+                }
+            }else{
+                
+                throw new MultipleEntranceException("Entrance already exists, you can not set another.");
+            }
+        }catch(MultipleEntranceException e){
+            System.out.println("Entrance already been set, you can not set another.");
+            throw new MultipleEntranceException("Entrance already exists, you can not set another.");
+        }
+
+        
     }
 
     /**
      * Set a specific Maze's Exit.
      * @param tile: The specific Maze's Exit.
      */
-    private void setExit(Tile tile){
-        exit = tile;
+    private void setExit(Tile tile) throws MultipleExitException{
+        try{
+            if (exit == null){
+                for(int i=0; i<getTiles().size(); i++){
+                    if( getTiles().get(i).contains(tile) ){
+                        exit = tile;
+                        break;
+                    }else{
+                        if(i == getTiles().size()-1){
+                            System.out.println("This tile is not in the Maze, so you can not setExit using this tile.");
+                        }
+                    }
+                }
+            }else{
+                
+                throw new MultipleExitException("Exit already exists, you can not set another.");
+            }
+        }catch(MultipleExitException e){
+            System.out.println("Exit already exists, you can not set another.");
+            throw new MultipleExitException("Exit already exists, you can not set another.");
+        }
+
+
     }
 
     /**
@@ -287,9 +325,7 @@ public class Maze implements Serializable{
      * @param yay: y-coordinate.
      */
     public Coordinate setCoord(int xax, int yay){
-        Coordinate a = new Coordinate();
-        a.x = xax;
-        a.y = yay;
+        Coordinate a = new Coordinate(xax,yay);
 
         return a;
 
@@ -304,7 +340,7 @@ public class Maze implements Serializable{
         private int y;
 
         /** The constructor of the Coordinate class */
-        public void Coordinate(int xx, int yy){
+        private Coordinate(int xx, int yy){
             // Coordinate a = new Coordinate();
             x = xx;
             y = yy;

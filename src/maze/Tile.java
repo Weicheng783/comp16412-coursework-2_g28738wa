@@ -13,11 +13,15 @@ public class Tile implements Serializable{
 
     protected Maze.Coordinate coords;
     
+    // private Tile(Type typee){
+    //     type = typee;
+    // }
+
     /**
      * The Tile class constructor.
      * @param typee: Type of the Tile.
      */
-    private void Tile(Type typee){
+    private Tile(Type typee){
         type = typee;
     }
 
@@ -32,19 +36,20 @@ public class Tile implements Serializable{
      * @return A tile object if the single char is in .#ex, otherwise it returns null.
      */
     protected static Tile fromChar(char letter){
-        Tile a = new Tile();
+        // Tile a = new Tile();
 
         if(letter == '.'){
-            a.type = Type.CORRIDOR;
+            Tile a = new Tile(Type.CORRIDOR);
+            // a.type = Type.CORRIDOR;
             return a;
         }else if(letter == '#'){
-            a.type = Type.WALL;
+            Tile a = new Tile(Type.WALL);
             return a;
         }else if(letter == 'e'){
-            a.type = Type.ENTRANCE;
+            Tile a = new Tile(Type.ENTRANCE);
             return a;
         }else if(letter == 'x'){
-            a.type = Type.EXIT;
+            Tile a = new Tile(Type.EXIT);
             return a;
         }else{
             return null;
