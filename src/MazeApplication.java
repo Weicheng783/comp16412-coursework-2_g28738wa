@@ -341,7 +341,7 @@ public class MazeApplication extends Application implements Serializable{
         for(int i=test.getLineno()-1; i>=0; i--){ //hang shu
             for(int ii=0; ii<test.getColno(); ii++){ //lie shu
 
-                if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "#"){
+                if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "#"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.web("#895B35")); 
                     R1.setArcHeight(15);
@@ -349,7 +349,7 @@ public class MazeApplication extends Application implements Serializable{
                     HBox HB = Visual.hbox();
                     HB.getChildren().addAll(R1);
                     many.add(HB);
-                }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "."){
+                }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "."){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.PINK); 
                     R1.setArcHeight(15);
@@ -357,7 +357,7 @@ public class MazeApplication extends Application implements Serializable{
                     HBox HB = Visual.hbox();
                     HB.getChildren().addAll(R1);
                     many.add(HB);       
-                }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "x"){
+                }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "x"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.GREEN); 
                     R1.setArcHeight(15);
@@ -371,7 +371,7 @@ public class MazeApplication extends Application implements Serializable{
                     // HBox HB = Visual.hbox();
                     // HB.getChildren().addAll(t);
                     // many.add(HB);   
-                }else if(test.getTileAtLocation(test.setCoord(i,ii)).toString() == "e"){
+                }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "e"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.PURPLE); 
                     R1.setArcHeight(15);
@@ -414,8 +414,8 @@ public class MazeApplication extends Application implements Serializable{
                 System.out.println(i);
                 System.out.println(ii);
 
-                System.out.println(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString()  );
-                if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "#"){
+                System.out.println(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString()  );
+                if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "#"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.web("#895B35")); 
                     R1.setArcHeight(15);
@@ -423,8 +423,8 @@ public class MazeApplication extends Application implements Serializable{
                     HBox HB = Visual.hbox();
                     HB.getChildren().addAll(R1);
                     many.add(HB);
-                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "."){
-                    if ( Route.getBlackList().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  )  ){
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "."){
+                    if ( Route.getBlackList().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  )  ){
                         Rectangle R1 = Visual.rectangle(); 
                         R1.setFill (Color.RED); 
                         R1.setArcHeight(15);
@@ -432,7 +432,7 @@ public class MazeApplication extends Application implements Serializable{
                         HBox HB = Visual.hbox();
                         HB.getChildren().addAll(R1);
                         many.add(HB);  
-                    }else if(  Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true  ){
+                    }else if(  Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true  ){
                         Rectangle R1 = Visual.rectangle(); 
                         R1.setFill (Color.GREEN); 
                         R1.setArcHeight(15);
@@ -450,8 +450,8 @@ public class MazeApplication extends Application implements Serializable{
                         many.add(HB);                          
                     }
      
-                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "x"){
-                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true ){
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "x"){
+                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true ){
                         Rectangle R1 = Visual.rectangle(); 
                         R1.setFill (Color.GREEN); 
                         R1.setArcHeight(15);
@@ -475,8 +475,8 @@ public class MazeApplication extends Application implements Serializable{
                     // HBox HB = Visual.hbox();
                     // HB.getChildren().addAll(t);
                     // many.add(HB);   
-                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii)).toString() == "e"){
-                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(i,ii))  ) == true ){
+                }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "e"){
+                    if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true ){
                         Rectangle R1 = Visual.rectangle(); 
                         R1.setFill (Color.GREEN); 
                         R1.setArcHeight(15);

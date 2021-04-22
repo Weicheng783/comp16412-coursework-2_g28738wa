@@ -239,10 +239,10 @@ public class Maze implements Serializable{
      */
     public String toString(){
         String all = "";
-        for (int i = getTiles().size()-1; i >= 0; i--){
+        for (int i = lineno-1; i >= 0; i--){
             String split = "";
             for (int ii = 0; ii < colno; ii ++){
-                split = split + getTileAtLocation(setCoord(i,ii)).toString();
+                split = split + getTileAtLocation(setCoord(ii,i)).toString();
             }
             if (i != 0){
                 split = split + "\n";

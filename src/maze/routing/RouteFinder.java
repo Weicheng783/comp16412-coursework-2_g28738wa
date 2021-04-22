@@ -242,12 +242,12 @@ public class RouteFinder implements Serializable{
             for (int ii = 0; ii < this.maze.getColno(); ii ++){
                 
                 // this.blackList.contains(next) || this.route.search(next) != -1
-                if (   this.blackList.contains(  this.maze.getTileAtLocation(this.maze.setCoord(i,ii))  )   ){
+                if (   this.blackList.contains(  this.maze.getTileAtLocation(this.maze.setCoord(ii,i))  )   ){
                     split = split + "-";
-                }else if (  this.route.search(  this.maze.getTileAtLocation(this.maze.setCoord(i,ii))  ) != -1  ){
+                }else if (  this.route.search(  this.maze.getTileAtLocation(this.maze.setCoord(ii,i))  ) != -1  ){
                     split = split + "*";
                 }else {
-                    split = split + this.maze.getTileAtLocation(this.maze.setCoord(i,ii)).toString();
+                    split = split + this.maze.getTileAtLocation(this.maze.setCoord(ii,i)).toString();
                 }
 
             }
