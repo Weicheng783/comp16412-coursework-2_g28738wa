@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button; 
 import javafx.scene.layout.Background; 
 import javafx.scene.layout.HBox; 
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox; 
 import javafx.scene.paint.Color; 
 import javafx.scene.shape.Polygon; 
@@ -338,8 +339,8 @@ public class MazeApplication extends Application implements Serializable{
 
         boxes.clear();
 
-        for(int i=test.getLineno()-1; i>=0; i--){ //hang shu
-            for(int ii=0; ii<test.getColno(); ii++){ //lie shu
+        for(int i=test.getLineno()-1; i>=0; i--){ // column number
+            for(int ii=0; ii<test.getColno(); ii++){ // row number
 
                 if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "#"){
                     Rectangle R1 = Visual.rectangle(); 
@@ -351,7 +352,7 @@ public class MazeApplication extends Application implements Serializable{
                     many.add(HB);
                 }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "."){
                     Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.PINK); 
+                    R1.setFill (Color.WHITE); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
                     HBox HB = Visual.hbox();
@@ -359,42 +360,33 @@ public class MazeApplication extends Application implements Serializable{
                     many.add(HB);       
                 }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "x"){
                     Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.GREEN); 
+                    R1.setFill (Color.LIGHTGREEN); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
+                    Text text = Visual.text();
+                    text.setText("X");
+                    text.setStyle("-fx-font-weight:bold"); 
+                    StackPane pane = Visual.stackpane();
+                    pane.getChildren().addAll(R1,text);
                     HBox HB = Visual.hbox();
-                    HB.getChildren().addAll(R1);
+                    HB.getChildren().addAll(pane);
                     many.add(HB);   
-                    // Text t = Visual.text();
-                    // t.setText("X");
-                    // t.setFont(new Font(15));
-                    // HBox HB = Visual.hbox();
-                    // HB.getChildren().addAll(t);
-                    // many.add(HB);   
+  
                 }else if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "e"){
                     Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.PURPLE); 
+                    R1.setFill (Color.LIGHTBLUE); 
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
+                    Text text = Visual.text();
+                    text.setText("E");
+                    text.setStyle("-fx-font-weight:bold"); 
+                    StackPane pane = Visual.stackpane();
+                    pane.getChildren().addAll(R1,text);
                     HBox HB = Visual.hbox();
-                    HB.getChildren().addAll(R1);
+                    HB.getChildren().addAll(pane);
                     many.add(HB);
-                    // Text t = Visual.text();
-                    // t.setText("e");
-                    // t.setFont(new Font(20));
-                    // HBox HB = Visual.hbox();
-                    // HB.getChildren().addAll(t);
-                    // many.add(HB);
-                }else{
-                    Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.RED); 
-                    R1.setArcHeight(15);
-                    R1.setArcWidth(15);
-                    HBox HB = Visual.hbox();
-                    HB.getChildren().addAll(R1);
-                    many.add(HB);         
-                }
 
+                }
             }
             HBox a = Visual.hbox();
             a.setAlignment(Pos.CENTER);
@@ -426,23 +418,35 @@ public class MazeApplication extends Application implements Serializable{
                 }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "."){
                     if ( Route.getBlackList().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  )  ){
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.RED); 
+                        R1.setFill (Color.WHITE); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.pathtext();
+                        text.setText("-");
+                        text.setFill(Color.RED);
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
-                        many.add(HB);  
+                        HB.getChildren().addAll(pane);
+                        many.add(HB);
                     }else if(  Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true  ){
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.GREEN); 
+                        R1.setFill (Color.WHITE); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.pathtext();
+                        text.setText("*");
+                        text.setFill(Color.PURPLE);
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
+                        HB.getChildren().addAll(pane);
                         many.add(HB);
                     }else{
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.PINK); 
+                        R1.setFill (Color.WHITE); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
                         HBox HB = Visual.hbox();
@@ -453,60 +457,64 @@ public class MazeApplication extends Application implements Serializable{
                 }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "x"){
                     if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true ){
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.GREEN); 
+                        R1.setFill (Color.LIGHTGREEN); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.pathtext();
+                        text.setText("*");
+                        text.setFill(Color.PURPLE);
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
-                        many.add(HB); 
+                        HB.getChildren().addAll(pane);
+                        many.add(HB);
                     }else{
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.BLUE); 
+                        R1.setFill (Color.LIGHTGREEN); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.text();
+                        text.setText("X");
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
-                        many.add(HB);                         
+                        HB.getChildren().addAll(pane);
+                        many.add(HB);                           
                     }
   
-                    // Text t = Visual.text();
-                    // t.setText("X");
-                    // t.setFont(new Font(15));
-                    // HBox HB = Visual.hbox();
-                    // HB.getChildren().addAll(t);
-                    // many.add(HB);   
+
                 }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "e"){
                     if ( Route.getRoute().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  ) == true ){
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.GREEN); 
+                        R1.setFill (Color.LIGHTBLUE); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.pathtext();
+                        text.setText("*");
+                        text.setFill(Color.PURPLE);
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
-                        many.add(HB); 
+                        HB.getChildren().addAll(pane);
+                        many.add(HB);
                     }else{
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.PURPLE); 
+                        R1.setFill (Color.LIGHTBLUE); 
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
+                        Text text = Visual.text();
+                        text.setText("E");
+                        text.setStyle("-fx-font-weight:bold"); 
+                        StackPane pane = Visual.stackpane();
+                        pane.getChildren().addAll(R1,text);
                         HBox HB = Visual.hbox();
-                        HB.getChildren().addAll(R1);
-                        many.add(HB);                         
+                        HB.getChildren().addAll(pane);
+                        many.add(HB);                      
                     }
-                    // Text t = Visual.text();
-                    // t.setText("e");
-                    // t.setFont(new Font(20));
-                    // HBox HB = Visual.hbox();
-                    // HB.getChildren().addAll(t);
-                    // many.add(HB);
-                }else{
-                    Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.RED); 
-                    R1.setArcHeight(15);
-                    R1.setArcWidth(15);
-                    HBox HB = Visual.hbox();
-                    HB.getChildren().addAll(R1);
-                    many.add(HB);         
+ 
                 }
 
             }

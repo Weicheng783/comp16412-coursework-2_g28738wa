@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Background; 
 import javafx.scene.layout.HBox; 
 import javafx.scene.layout.VBox; 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color; 
 import javafx.scene.shape.Polygon; 
 import javafx.scene.shape.Circle; 
@@ -51,6 +52,7 @@ public class Visual implements Serializable{
 
     public static Button btn(){
         Button btn = new Button();
+        btn.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
         return btn;
     }
 
@@ -70,14 +72,25 @@ public class Visual implements Serializable{
     }
 
     public static Rectangle rectangle(){
-        Rectangle RTG = new Rectangle (20,30,20,30); 
+        Rectangle RTG = new Rectangle (50,50,50,50); 
         return RTG;
     }
 
     public static Text text(){
-        Text text = new Text(20, 30, "");
-        text.setFont(new Font(20));
+        Text text = new Text(40, 40, "");
+        text.setFont(new Font(40));
         return text;
+    }
+
+    public static Text pathtext(){
+        Text pathtext = new Text(40, 40, "");
+        pathtext.setFont(new Font(25));
+        return pathtext;
+    }
+
+    public static StackPane stackpane(){
+        StackPane stackpane = new StackPane();
+        return stackpane;
     }
     // public Scene scene(){
     //     Scene scene = new Scene(group); 
