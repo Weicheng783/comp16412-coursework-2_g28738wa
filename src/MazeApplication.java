@@ -98,7 +98,7 @@ public class MazeApplication extends Application implements Serializable{
         loadMap.setText("Load Map");
         loadMap.setOnAction(e->{
 
-            System.out.println("Load Map Button.");
+
             fileChooser.setTitle("Select a Maze");
             fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("TXT", "*.txt")
@@ -120,6 +120,7 @@ public class MazeApplication extends Application implements Serializable{
                     loadMaze();
 
                     start(stage);
+                    
                 }catch(IOException ex){
                     System.out.println("Error: IOException happened.");
                 }catch(InvalidMazeException ex){
@@ -137,7 +138,7 @@ public class MazeApplication extends Application implements Serializable{
         loadRt.setText("Load Route");
         loadRt.setOnAction(e->{
 
-            System.out.println("Load Route Button.");
+
             FileChooser objfileChooser = Visual.filechooser();
             
             objfileChooser.setTitle("Select a RouteFinder object (.obj)");
@@ -148,7 +149,7 @@ public class MazeApplication extends Application implements Serializable{
 
             if(objfile != null){
 
-                System.out.println("The objfile has opened!");
+
 
                 try{
                     Route = Route.load(objfile.getAbsolutePath());
@@ -208,7 +209,7 @@ public class MazeApplication extends Application implements Serializable{
         saveRt.setText("Save Route");
         saveRt.setOnAction(e->{
 
-            System.out.println("Save Route Button.");
+
      
 
             if(Route != null){
@@ -247,7 +248,6 @@ public class MazeApplication extends Application implements Serializable{
         Button step = Visual.btn();
         step.setText("Step");
         step.setOnAction(e->{
-            System.out.println("Step Button.");
 
             if(Route != null){
                 try{
@@ -273,11 +273,11 @@ public class MazeApplication extends Application implements Serializable{
         VBox maze = Visual.vbox(); 
         maze.setAlignment(Pos.CENTER); 
         maze.getChildren().addAll(boxes);
-
+        maze.setStyle("-fx-border-width:3; -fx-border-style: solid inside; -fx-border-color: purple; -fx-border-insets: 5; -fx-border-radius: 5;");
 
         VBox root = Visual.vbox(); 
 
-        root.setStyle("-fx-background-color:White; -fx-border-width:2;");
+        root.setStyle("-fx-background-color:White; -fx-border-width:3; -fx-border-style: solid inside; -fx-border-color: blue; -fx-border-insets: 5; -fx-border-radius: 5;");
 
         root.setAlignment(Pos.CENTER); 
         root.getChildren().addAll(loadMap ,loadRt, saveRt, maze, step); 
@@ -285,7 +285,24 @@ public class MazeApplication extends Application implements Serializable{
 
         VBox root2 = Visual.vbox();
 
-        root2.getChildren().addAll();
+        Text notice = Visual.text();
+        notice.setText("Waiting For a Valid Maze then. Ready to solve it.");
+        notice.setFont(new Font(18));
+
+        Text notice1 = Visual.text();
+        notice1.setText("Note:\nRed '-' means this way is blocked, \nPurple '*' means the current finding path, \nAfter the maze solved, the maze will remain no change.");
+        notice1.setFont(new Font(18));
+        notice1.setUnderline(true);
+        notice1.setFill(Color.RED);
+
+        Text notice2 = Visual.text();
+        notice2.setText("* Weicheng Ao * 2021 *");
+        notice2.setFont(new Font(20));
+        notice2.setFill(Color.GREEN);
+
+        root2.setAlignment(Pos.CENTER);
+
+        root2.getChildren().addAll(notice,notice1,notice2);
 
         VBox group = Visual.vbox();
         group.getChildren().addAll(root,root2);
