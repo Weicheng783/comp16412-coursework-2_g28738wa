@@ -21,8 +21,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import maze.*;
 
+
+/**
+ * RouteFinder class (public)
+ * @author Weicheng Ao
+ * @version 1.0
+ * @since 1.0
+ */
 public class RouteFinder implements Serializable{
-    // <E> 
+
     private Maze maze;
     private Stack<Tile> route = new Stack<> ();
     private boolean finished = false;
@@ -35,39 +42,45 @@ public class RouteFinder implements Serializable{
 
     private List<Tile> blackList= new LinkedList<> ();
 
-    // public void RouteFinder(){};//!!!notice this!
-    // public RouteFinder obj;
-
+    /**
+     * RouteFinder constructor. (public)
+     * @param mazee: A type Maze object required as input.
+     */
     public RouteFinder (Maze mazee) {
-        //!!!void?!!!
         this.maze = mazee;
         entrance = this.maze.getEntrance();
         temp = entrance;
-        // System.out.println("Successfully get maze!");
-        // System.out.println(route.empty());
-        // Tile testcase = maze.getEntrance();
-        // System.out.println(testcase.toString());
-        // route.push(testcase);
-        // testcase = maze.getAdjacentTile(testcase,Maze.Direction.EAST);
-        // route.push(testcase);
-        // System.out.println(route.empty());
-        // System.out.println(route.search(testcase));
-        // System.out.println(testcase.toString());
 
     }
 
+    /**
+     * Get stored Maze. (public)
+     * @return The stored Maze object.
+     */
     public Maze getMaze(){
         return maze;
     }
 
+    /**
+     * Get stored Route. (public)
+     * @return An linkedlist of Tiles from the start to the last stack of tile entered.
+     */
     public List<Tile> getRoute(){
         return route;
     }
 
+    /**
+     * Get BlackListed tiles(if a dead route encountered, then the tiles are enter blacklist). (public)
+     * @return An list of BlackListed Tiles for use.
+     */
     public List<Tile> getBlackList(){
         return blackList;
     }
 
+    /**
+     * Get a Boolean value if the Route is already completed. (public)
+     * @return A boolean value if the Route is already finished.
+     */
     public boolean isFinished(){
         if(finished == true){
             return true;
@@ -76,6 +89,11 @@ public class RouteFinder implements Serializable{
         }
     }
 
+    /**
+     * Load a RouteFinder object. (public)
+     * @param str: The file path to load a RouteFinder object.
+     * @return A RouteFinder object if successful loaded.
+     */
     public static RouteFinder load(String str) {
         try (
             ObjectInputStream objectStream = new ObjectInputStream(
@@ -94,15 +112,16 @@ public class RouteFinder implements Serializable{
 
     }
 
-    // public void savepath(String str){
-    //     save(str);
-    // }
 
+    /**
+     * Write current RouteFinder object out to a file. (public)
+     * @param str: The file path to save the RouteFinder object.
+     */
     public void save(String str) throws IOException{
         ObjectOutputStream objectStream = null;
         try {
             objectStream = new ObjectOutputStream(new FileOutputStream( str  ));
-            // System.out.println(this.isFinished());
+
             objectStream.writeObject(this);
         } catch (FileNotFoundException e) {
             System.out.println("Error: Could not open " + str +" for writing.");
@@ -118,6 +137,11 @@ public class RouteFinder implements Serializable{
         }
     }
 
+
+    /**
+     * Step through the Route-solving process. (public)
+     * @return A boolean value. True if the Maze is solved, otherwise it is False.
+     */
     public boolean step() throws NoRouteFoundException{
         // Clock-wise finding...
         if (firstenter == true){
@@ -137,7 +161,7 @@ public class RouteFinder implements Serializable{
                     return true;
                 }else if(next.toString() == "."){
                     if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
+
                     }else{
                         this.route.push(next);
                         temp = next;
@@ -150,7 +174,7 @@ public class RouteFinder implements Serializable{
 
             next = this.maze.getAdjacentTile(temp,Maze.Direction.EAST);
             if(next != null){
-                // System.out.println("east");
+ 
                 if(next.toString() == "x"){
                     this.route.push(next);
                     this.finished = true;
@@ -158,7 +182,7 @@ public class RouteFinder implements Serializable{
                     return true;
                 }else if(next.toString() == "."){
                     if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
+ 
                     }else{
                         this.route.push(next);
                         temp = next;
@@ -171,7 +195,7 @@ public class RouteFinder implements Serializable{
     
             next = this.maze.getAdjacentTile(temp,Maze.Direction.SOUTH);
             if(next != null){
-                // System.out.println("south");
+
                 if(next.toString() == "x"){
                     this.route.push(next);
                     this.finished = true;
@@ -179,11 +203,11 @@ public class RouteFinder implements Serializable{
                     return true;
                 }else if(next.toString() == "."){
                     if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
+ 
                     }else{
                         this.route.push(next);
                         temp = next;
-                        // System.out.println("GO HERE!");
+
                         return false;
                     }
 
@@ -200,7 +224,7 @@ public class RouteFinder implements Serializable{
                     return true;
                 }else if(next.toString() == "."){
                     if(this.blackList.contains(next) || this.route.search(next) != -1 ){
-                        // continue;
+
                     }else{
                         this.route.push(next);
                         temp = next;
@@ -228,20 +252,22 @@ public class RouteFinder implements Serializable{
             return true;
         }
 
-        // System.out.println(this.route.size());
-        // System.out.println(this.route);
-        // System.out.println(this.blackList);
     }
 
+
+    /**
+     * Return a string representation of the Route-Solving current state. (public)
+     * @return The string representation of the Route-Solving current state.
+     */
     public String toString(){
-        // String a = new String();
+
 
         String all = "";
         for (int i = this.maze.getLineno()-1; i >= 0; i--){
             String split = "";
             for (int ii = 0; ii < this.maze.getColno(); ii ++){
                 
-                // this.blackList.contains(next) || this.route.search(next) != -1
+
                 if (   this.blackList.contains(  this.maze.getTileAtLocation(this.maze.setCoord(ii,i))  )   ){
                     split = split + "-";
                 }else if (  this.route.search(  this.maze.getTileAtLocation(this.maze.setCoord(ii,i))  ) != -1  ){

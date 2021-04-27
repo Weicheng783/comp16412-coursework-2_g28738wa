@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 
 /**
- * Maze class
+ * Maze class (public)
  * @author Weicheng Ao
  * @version 1.0
  * @since 1.0
@@ -35,7 +35,7 @@ public class Maze implements Serializable{
 
     private Maze(){}
 
-    /** import maze object from 'txt' file, stores Coordinates of each Tile object. 
+    /** import maze object from 'txt' file, stores Coordinates of each Tile object. (public)
      *  @param path: txt file path, it is a String object.
      *  @return Return a Maze object if the layout of the maze is valid, otherwise throw exceptions.
      */
@@ -51,12 +51,9 @@ public class Maze implements Serializable{
         ) {
             lineno = 0;
             String line = bufferedReader.readLine();
-            // if (!line.strip().equals("{")) return null;
-            // line = bufferedReader.readLine();
+
             while (line != null) {
-                // String[] parts = line.strip().split(":");
-                // if (parts.length == 1) break;
-                // String clean_value = parts[1].split(",")[0].strip();
+
                 System.out.println(line);
 
                 List<Tile> tiiles = new LinkedList<>();
@@ -73,8 +70,7 @@ public class Maze implements Serializable{
                 }
 
                 noofchars = length;
-                // System.out.println(length);
-                // for (int i = 0; i < lineno; i++){
+
 
                     for (int m = 0; m < length; m++){
                             Tile temp = Tile.fromChar(line.toCharArray()[m]);
@@ -99,11 +95,8 @@ public class Maze implements Serializable{
                     }
                 
                 a.tiles.add(lineno, tiiles);
-                // System.out.println(a.tiles);
-                // a.tiiles.clear();
-                lineno = lineno + 1;
 
-                //  System.out.println("Break!");
+                lineno = lineno + 1;
 
                 line = bufferedReader.readLine();
                 
@@ -123,7 +116,7 @@ public class Maze implements Serializable{
                 for(int n = 0; n < a.tiles.get(m).size(); n++){
                     a.tiles.get(lineno-1-m).get(n).coords = a.setCoord(n, m); //original m,n
                     colno = a.tiles.get(m).size();
-                    // System.out.println(m+","+n+". Success!");
+
                 }
             }
             System.out.println(a.tiles);
@@ -133,24 +126,28 @@ public class Maze implements Serializable{
         } catch (IOException e) {
              System.out.println("Error: IOException when reading "+ path);
         }
-        // throw new RaggedMazeException("HAHA GOOD! YOU THROWED AN EXCEPTION!");
-        // System.out.println(lineno);
-        // System.out.println(colno);
 
         return a;
     }
 
-
+    /**
+     * Get the Maze's column number. (public)
+     * @return The Maze's column number.
+     */
     public int getColno(){
         return colno;
     }
 
+    /**
+     * Get the Maze's row number. (public)
+     * @return The Maze's row number.
+     */
     public int getLineno(){
         return lineno;
     }
 
     /**
-     * Get a specific Maze's Entrance.
+     * Get a specific Maze's Entrance. (public)
      * @return The specific Maze's Entrance.
      */
     public Tile getEntrance(){
@@ -158,7 +155,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Get a specific Maze's Exit.
+     * Get a specific Maze's Exit. (public)
      * @return The specific Maze's Exit.
      */
     public Tile getExit(){
@@ -166,7 +163,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Set a specific Maze's Entrance.
+     * Set a specific Maze's Entrance. (private)
      * @param tile: The specific Maze's Entrance.
      */
     private void setEntrance(Tile tile) throws MultipleEntranceException{
@@ -195,7 +192,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Set a specific Maze's Exit.
+     * Set a specific Maze's Exit. (private)
      * @param tile: The specific Maze's Exit.
      */
     private void setExit(Tile tile) throws MultipleExitException{
@@ -224,7 +221,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Get all Tile objects in a 2D array.
+     * Get all Tile objects in a 2D array. (public)
      * @return All tile objects in a 2D array.
      */
     public List<List<Tile>> getTiles(){
@@ -234,7 +231,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Return a string representation of the tile objects.
+     * Return a string representation of the tile objects. (public)
      * @return A string representation of tile objects.
      */
     public String toString(){
@@ -250,12 +247,11 @@ public class Maze implements Serializable{
             all = all + split;
         }
         return all;
-        //!!!This is suspectable!!!
 
     }
 
     /**
-     * Get adjacentTile infomation from a specific tile and the wanted direction.
+     * Get adjacentTile infomation from a specific tile and the wanted direction. (public)
      * @return a Tile object which is the required adjacent tile.
      * @param tile: The specific raw tile object
      * @param dir: The wanted direction.
@@ -297,19 +293,16 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Return a Coordinate object given a specific tile.
+     * Return a Coordinate object given a specific tile. (public)
      * @return A Coordinate object of the specific tile location.
      * @param tile: Specific tile needed to find location.
      */
     public Coordinate getTileLocation(Tile tile){
-        // return tile.Coordinate;
-        // Coordinate a = new Coordinate();
-        // a.x = tile.
         return tile.coords;
     }
 
     /**
-     * Give a coordinate, return a tile object which is located at this place.
+     * Give a coordinate, return a tile object which is located at this place. (public)
      * @return The tile object which is located at this place.
      * @param coords: Specific coordinate object.
      */
@@ -319,7 +312,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * Give a pair of points (x,y), return a new created coordinate object.
+     * Give a pair of points (x,y), return a new created coordinate object. (public)
      * @return The new created coordinate object.
      * @param xax: x-coordinate.
      * @param yay: y-coordinate.
@@ -331,32 +324,35 @@ public class Maze implements Serializable{
 
     }
 
+
     /**
-     * This class is a nested class in Maze class, it serves the coordinates part. 
-     */
+    * Coordinate class (Nested class in Maze class). This class is a nested class in Maze class, it serves the coordinates part. (public)
+    * @author Weicheng Ao
+    * @version 1.0
+    * @since 1.0
+    */
     public class Coordinate implements Serializable{
 
         private int x;
         private int y;
 
-        /** The constructor of the Coordinate class */
+        /** The constructor of the Coordinate class. (public) */
         public Coordinate(int xx, int yy){
-            // Coordinate a = new Coordinate();
             x = xx;
             y = yy;
         }
 
-        /** Get x-coordinate */
+        /** Get x-coordinate. (public) */
         public int getX(){
             return x;
         }
 
-        /** Get y-coordinate  */
+        /** Get y-coordinate. (public) */
         public int getY(){
             return y;
         }
 
-        /** Returns the string representation of the coordinates. */
+        /** Returns the string representation of the coordinates. (public) */
         public String toString(){
             return "(" + x + ", " + y +")";
         }
@@ -364,7 +360,7 @@ public class Maze implements Serializable{
     }
 
     /**
-     * An enum which contains four direction constants.
+     * An enum which contains four direction constants. (public)
      */
     public enum Direction {
         NORTH,SOUTH,EAST,WEST;

@@ -3,7 +3,7 @@ package maze;
 import java.io.Serializable;
 
 /**
- * Tile class
+ * Tile class (public)
  * @author Weicheng Ao
  * @version 1.0
  * @since 1.0
@@ -12,26 +12,22 @@ public class Tile implements Serializable{
     private Type type;
 
     protected Maze.Coordinate coords;
-    
-    // private Tile(Type typee){
-    //     type = typee;
-    // }
 
     /**
-     * The Tile class constructor.
+     * The Tile class constructor. (private)
      * @param typee: Type of the Tile.
      */
     private Tile(Type typee){
         type = typee;
     }
 
-    /** This is enum which contains the four Type constants. */
+    /** This is enum which contains the four Type constants. (public) */
     public enum Type {
         CORRIDOR,ENTRANCE,EXIT,WALL;
     }
 
     /**
-     * This method 'fromChar' takes a letter, and try to find it's meaning, returns the Tile object if the char has meaning.
+     * This method 'fromChar' takes a letter, and try to find it's meaning, returns the Tile object if the char has meaning. (protected)
      * @param letter: A single char(can be . # e x).
      * @return A tile object if the single char is in .#ex, otherwise it returns null.
      */
@@ -57,14 +53,14 @@ public class Tile implements Serializable{
 
     }
 
-    /** Get a specific Tile type.
+    /** Get a specific Tile type. (public)
      * @return A constant in enum Type which is pre-stored in a specific Tile.
      */
     public Type getType(){
         return type;
     }
 
-    /** Check if a specific tile object can be navigated
+    /** Check if a specific tile object can be navigated. (public)
       * @return True if it can be navigated, false when the type is WALL otherwise.
       */
     public boolean isNavigable(){
@@ -76,7 +72,7 @@ public class Tile implements Serializable{
 
     }
 
-    /** Returns a string representation of the type constants 
+    /** Returns a string representation of the type constants. (public)
     * @return The string representation of the type constants(#,e,x,.). But if the tile has no type, it returns null.
     */
     public String toString(){

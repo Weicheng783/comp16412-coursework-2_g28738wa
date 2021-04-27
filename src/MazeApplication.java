@@ -38,7 +38,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
-// import java.awt.Desktop;
+
 import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,33 +47,25 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
-//so the whole scene’s backgroundcolor is Green, We put three Blue Vboxes on it which covers the top half of //the scene,  so that the rest part of the scene remains green which is the second rectangle showing in //the example. 
-
+/**
+ * MazeApplication class (public)
+ * @author Weicheng Ao
+ * @version 1.0
+ * @since 1.0
+ */
 public class MazeApplication extends Application implements Serializable{  
 	public List<HBox> many = new LinkedList<> ();
 	public List<HBox> boxes = new LinkedList<> ();
-    // public List<Text> textList = new LinkedList<> ();
-    // public List<Rectangle> rectangleList = new LinkedList<> ();
+
     public Maze test;
 
     public RouteFinder Route;
-    // private final Desktop desktop = Desktop.getDesktop();
 
 
-    // public static void main(String args[]) throws InvalidMazeException, IOException {
-    //     Maze test = Maze.fromTxt("/home/csimage/GitRepos/comp16412-coursework-2_g28738wa/resources/mazes/maze1.txt");
-    //     System.out.println(test.toString());
-    //     // test.setMaze();
-    //     RouteFinder bbb = new RouteFinder(test);
-    //     System.out.println(bbb.isFinished());
-    //     bbb.save("savedmazetest");
-    //     RouteFinder ccc = bbb.load("savedmazetest");
-    //     System.out.println( ccc.toString() );
-
-
-    // }
-
-
+    /**
+     * The start method of JavaFX. (public)
+     * @param stage: JavaFX stage object.
+     */
     @Override
     public void start (Stage stage) throws InvalidMazeException, IOException {
 
@@ -98,17 +90,14 @@ public class MazeApplication extends Application implements Serializable{
 
                 try{
                     test = Maze.fromTxt(file.getAbsolutePath());
-                    // this.test = test;
+
                     System.out.println(file.getAbsolutePath());
                     System.out.println(test.toString());
-                    // test.setMaze();
+
                     Route = new RouteFinder(test);
-                    // System.out.println(bbb.isFinished());
-                    // bbb.save("savedmazetest");
-                    // RouteFinder ccc = bbb.load("savedmazetest");
-                    // System.out.println( ccc.toString() );
+
                     loadMaze();
-                    // test = null;
+
                     start(stage);
                 }catch(IOException ex){
                     System.out.println("Error: IOException happened.");
@@ -147,7 +136,6 @@ public class MazeApplication extends Application implements Serializable{
                 try{
                     Route = Route.load(objfile.getAbsolutePath());
                     test = Route.getMaze();
-                    // Maze tt = new Maze();
 
 
                     String all = "";
@@ -155,9 +143,7 @@ public class MazeApplication extends Application implements Serializable{
                         String split = "";
                         for (int ii = 0; ii < test.getTiles().get(i).size(); ii ++){
                             split = split + test.getTiles().get(i).get(ii).toString();
-                            // if(ii == test.getTiles().get(i).size()){
-                                // split = split + "\n";
-                            // }
+
                         }
                         if (i != test.getTiles().size()-1 ){
                             split = split + "\n";
@@ -167,19 +153,16 @@ public class MazeApplication extends Application implements Serializable{
 
                     System.out.println(all);
                     System.out.println(System.getProperty("user.dir"));
-                    // FileOutputStream fos = new FileOutputStream(folder + File.separator + file);
+
                     File file = new File(System.getProperty("user.dir") + File.separator + "temp.txt");
                     file.createNewFile();
                     BufferedWriter out = new BufferedWriter(new FileWriter(file));
                     out.write(all);
                     out.flush();
-                    // file.close(); 
+
                 
                     test = Maze.fromTxt(System.getProperty("user.dir") + File.separator + "temp.txt");
 
-                    // System.out.println(test.toString());
-
-                    // Route = new RouteFinder(test);
                     System.out.println(test.getTiles());
 
                     if(test == null){
@@ -188,15 +171,6 @@ public class MazeApplication extends Application implements Serializable{
                         System.out.println(test);
                     }
 
-                    // System.out.println(Route.toString());    
-                    // System.out.println(Route.getBlackList().toString()); 
-                    // System.out.println(Route.getRoute().toString()); 
-                    // System.out.println(test.getTiles().size());
-                    // System.out.println( Maze.setCoord(8,0).getX() );
-                    // System.out.println( Route.getMaze().getTileAtLocation(tt.setCoord(8,0)).toString() );
-                    // System.out.println(test.testt.size());  
-                    // System.out.println(test.getTiles().get(0).size());
-                    // loadMaze();
                     updateRoute();
                     start(stage);
                 }catch(IOException ex){
@@ -230,9 +204,7 @@ public class MazeApplication extends Application implements Serializable{
                     FileChooser objfileSaver = Visual.filechooser();
                 
                     objfileSaver.setTitle("Select a place to save the RouteFinder object (.obj)");
-                    // objfileSaver.getExtensionFilters().addAll(
-                    //     new FileChooser.ExtensionFilter("OBJ", "*.obj")
-                    // );
+
                     File savefile = objfileSaver.showSaveDialog(stage);
 
                     System.out.println(savefile.getAbsolutePath()+".obj");
@@ -240,11 +212,6 @@ public class MazeApplication extends Application implements Serializable{
 
                     Route.save(savefile.getAbsolutePath()+".obj");
 
-                    // System.out.println(test.toString());
-
-                    // Route = new RouteFinder(test);
- 
-                    // updateRoute();
                     start(stage);
                 }catch(IOException ex){
                     System.out.println("Error: IOException happened.");
@@ -299,30 +266,26 @@ public class MazeApplication extends Application implements Serializable{
 
         VBox root = Visual.vbox(); 
 
-        // root.setBackground(1d2d2c); 
-        root.setStyle("-fx-background-color:White");
+        root.setStyle("-fx-background-color:White; -fx-border-width:2;");
 
-        // root.setFill(Color.BLUE);
         root.setAlignment(Pos.CENTER); 
         root.getChildren().addAll(loadMap ,loadRt, saveRt, maze, step); 
-        // bp.setTop(root);
+
 
         VBox root2 = Visual.vbox();
 
         root2.getChildren().addAll();
-        //bp.setLeft(leftVbox);
+
         VBox group = Visual.vbox();
         group.getChildren().addAll(root,root2);
 
+
         // This is the scene 
-
         Scene scene = new Scene(group); 
-        //,  600, 500, Color.GREEN
 
-        // Scene sceneb = new Scene(bp,  600, 500, Color.GREEN); 
 
         stage.setScene(scene); 
-        // stage.setScene(sceneb);   
+ 
 
         stage.setTitle("Maze");  
 
@@ -331,10 +294,16 @@ public class MazeApplication extends Application implements Serializable{
     } 
 
 
+    /**
+     * The main method of JavaFX, user interface. (public)
+     */
     public static void main(String args[]) { 
         launch(args);
     }
 
+    /**
+     * The method of loadMaze, initialise the whole Maze if possible. (public)
+     */
     public void loadMaze(){
 
         boxes.clear();
@@ -397,12 +366,15 @@ public class MazeApplication extends Application implements Serializable{
         }
     }
 
+    /**
+     * This method is used to updated the route, serves the main purpose of interface updating. (public)
+     */
     public void updateRoute(){
 
         boxes.clear();
 
-        for(int i=Route.getMaze().getTiles().size()-1; i>=0; i--){ //hang shu
-            for(int ii=0; ii<Route.getMaze().getTiles().get(i).size(); ii++){ //lie shu
+        for(int i=Route.getMaze().getTiles().size()-1; i>=0; i--){ 
+            for(int ii=0; ii<Route.getMaze().getTiles().get(i).size(); ii++){ 
                 System.out.println(i);
                 System.out.println(ii);
 
