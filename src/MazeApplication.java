@@ -54,17 +54,38 @@ import java.io.BufferedWriter;
  * @since 1.0
  */
 public class MazeApplication extends Application implements Serializable{  
+
+    /**
+     * The Constructor of the MazeApplication. (public)
+     */
+    public MazeApplication(){}
+
+    /**
+     * Field many: from HBox, it is the helper of the individual Tile object. (public)
+     */
 	public List<HBox> many = new LinkedList<> ();
+
+    /**
+     * Field boxes: from HBox, it is the helper of the whole Maze map (Tiles) object. (public)
+     */
 	public List<HBox> boxes = new LinkedList<> ();
 
+    /**
+     * Field test: from Maze, it defines a new Maze object for storing maze. (public)
+     */
     public Maze test;
 
+    /**
+     * Field Route: from RouteFinder, it defines a new RouteFinder object for storing Route. (public)
+     */
     public RouteFinder Route;
 
 
     /**
      * The start method of JavaFX. (public)
      * @param stage: JavaFX stage object.
+     * @exception InvalidMazeException if the maze is invalid, throws an InvalidMazeException.
+     * @exception IOException Throwed if IO exceptions occur.
      */
     @Override
     public void start (Stage stage) throws InvalidMazeException, IOException {
@@ -105,10 +126,6 @@ public class MazeApplication extends Application implements Serializable{
                     System.out.println("Error: InvalidMazeException happened.");
 
                 }
-                
-                // catch(NoRouteFoundException ex){
-                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
-                // }
 
 
             }
@@ -179,10 +196,7 @@ public class MazeApplication extends Application implements Serializable{
                     System.out.println("Error: InvalidMazeException happened.");
 
                 }
-                
-                // catch(NoRouteFoundException ex){
-                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
-                // }
+
 
             }else{
                 System.out.println("No objfile is loaded or the objfile is empty.");
@@ -221,10 +235,7 @@ public class MazeApplication extends Application implements Serializable{
                 }catch(NullPointerException ex){
                     System.out.println("Null Pointer Exception, nothing really stored.");
                 }
-                
-                // catch(NoRouteFoundException ex){
-                //     System.out.println("Error: The given maze has no solution found, please check your maze.");
-                // }
+
 
 
             }else{

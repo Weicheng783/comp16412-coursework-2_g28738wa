@@ -11,6 +11,10 @@ import java.io.Serializable;
 public class Tile implements Serializable{
     private Type type;
 
+    /**
+     * This field is Maze.Coordinate, we fetch and store coordinates in Maze.Coordinate. (protected)
+     * @param coords: Coordinates of a Tile object.
+     */
     protected Maze.Coordinate coords;
 
     /**

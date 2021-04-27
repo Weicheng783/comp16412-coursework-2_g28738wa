@@ -54,6 +54,11 @@ import java.io.IOException;
  */
 public class Visual implements Serializable{  
 
+    /**
+     * The Constructor of the Visual class. (public)
+     */
+    public Visual(){}
+
 
     /**
      * Create a new Button object to use. (public)

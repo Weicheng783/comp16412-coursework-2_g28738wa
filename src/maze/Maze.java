@@ -23,16 +23,31 @@ public class Maze implements Serializable{
     private Tile exit;
     private List<List<Tile>> tiles = new LinkedList<>();
 
+    /**
+     * Field testt: from List<String>, it is the linkedlist of the individual Tile object's string representation. (public)
+     */
     public List<String> testt = new LinkedList<>();
 
-
+    /**
+     * Field lineno: from int, it is the total row numbers of the whole maze. (public)
+     */
     public static int lineno = 0;
+
+    /**
+     * Field colno: from int, it is the total column numbers of the whole maze. (public)
+     */
     public static int colno = 0;
 
     private static boolean firstenter = true;
+
+    /**
+     * Field noofchars: from int, it is the number of Tile characters in a row. (public)
+     */
     public static int noofchars = 0;
 
-
+    /**
+     * The private Constructor of the Maze class. (private)
+     */
     private Maze(){}
 
     /** import maze object from 'txt' file, stores Coordinates of each Tile object. (public)
