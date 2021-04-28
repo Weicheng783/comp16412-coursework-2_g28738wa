@@ -13,7 +13,7 @@ public class MazeDriver  {
      * The main method of the MazeDriver. (public)
      */
     public static void main(String args[]) throws InvalidMazeException, IOException {
-        Maze test = Maze.fromTxt("/home/csimage/GitRepos/comp16412-coursework-2_g28738wa/resources/mazes/maze1.txt");
+        Maze test = Maze.fromTxt("/home/csimage/GitRepos/comp16412-coursework-2_g28738wa/resources/mazes/maze2 copy.txt");
         System.out.println(test.toString());
         // test.setMaze();
         RouteFinder bbb = new RouteFinder(test);

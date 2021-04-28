@@ -100,9 +100,9 @@ public class MazeApplication extends Application implements Serializable{
 
 
             fileChooser.setTitle("Select a Maze");
-            fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("TXT", "*.txt")
-            );
+            // fileChooser.getExtensionFilters().addAll(
+            //     new FileChooser.ExtensionFilter("TXT", "*.txt")
+            // );
             File file = fileChooser.showOpenDialog(stage);
 
             if(file != null){
@@ -141,10 +141,10 @@ public class MazeApplication extends Application implements Serializable{
 
             FileChooser objfileChooser = Visual.filechooser();
             
-            objfileChooser.setTitle("Select a RouteFinder object (.obj)");
-            objfileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("OBJ", "*.obj")
-            );
+            objfileChooser.setTitle("Select a RouteFinder object to begin this journey");
+            // objfileChooser.getExtensionFilters().addAll(
+            //     new FileChooser.ExtensionFilter("OBJ", "*.obj")
+            // );
             File objfile = objfileChooser.showOpenDialog(stage);
 
             if(objfile != null){
@@ -196,6 +196,8 @@ public class MazeApplication extends Application implements Serializable{
                 }catch(InvalidMazeException ex){
                     System.out.println("Error: InvalidMazeException happened.");
 
+                }catch(NullPointerException ex){
+                    System.out.println("Null pointer exception, this means the file is empty or otherwise.");
                 }
 
 
@@ -218,21 +220,19 @@ public class MazeApplication extends Application implements Serializable{
                 try{
                     FileChooser objfileSaver = Visual.filechooser();
                 
-                    objfileSaver.setTitle("Select a place to save the RouteFinder object (.obj)");
+                    objfileSaver.setTitle("Select or Type a place to save the RouteFinder object");
 
                     File savefile = objfileSaver.showSaveDialog(stage);
 
-                    System.out.println(savefile.getAbsolutePath()+".obj");
                     System.out.println("The objfile has opened!");
 
-                    Route.save(savefile.getAbsolutePath()+".obj");
+                    Route.save(savefile.getAbsolutePath());
 
                     start(stage);
                 }catch(IOException ex){
                     System.out.println("Error: IOException happened.");
                 }catch(InvalidMazeException ex){
                     System.out.println("Error: InvalidMazeException happened.");
-
                 }catch(NullPointerException ex){
                     System.out.println("Null Pointer Exception, nothing really stored.");
                 }
@@ -309,7 +309,7 @@ public class MazeApplication extends Application implements Serializable{
 
 
         // This is the scene 
-        Scene scene = new Scene(group); 
+        Scene scene = new Scene(group);
 
 
         stage.setScene(scene); 
@@ -403,10 +403,7 @@ public class MazeApplication extends Application implements Serializable{
 
         for(int i=Route.getMaze().getTiles().size()-1; i>=0; i--){ 
             for(int ii=0; ii<Route.getMaze().getTiles().get(i).size(); ii++){ 
-                System.out.println(i);
-                System.out.println(ii);
 
-                System.out.println(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString()  );
                 if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "#"){
                     Rectangle R1 = Visual.rectangle(); 
                     R1.setFill (Color.web("#895B35")); 
