@@ -58,7 +58,7 @@ public class Maze implements Serializable{
         firstenter = true;
 
         Maze a = new Maze();
-        
+    
         try (
             BufferedReader bufferedReader = new BufferedReader(
                 new FileReader(path)
@@ -69,7 +69,7 @@ public class Maze implements Serializable{
 
             while (line != null) {
 
-                System.out.println(line);
+                // System.out.println(line);
 
                 List<Tile> tiiles = new LinkedList<>();
                 
@@ -134,7 +134,7 @@ public class Maze implements Serializable{
 
                 }
             }
-            System.out.println(a.tiles);
+            // System.out.println(a.tiles);
 
         } catch (FileNotFoundException e) {
              System.out.println("Error: Could not open " + path);

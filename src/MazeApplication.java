@@ -100,9 +100,7 @@ public class MazeApplication extends Application implements Serializable{
 
 
             fileChooser.setTitle("Select a Maze");
-            // fileChooser.getExtensionFilters().addAll(
-            //     new FileChooser.ExtensionFilter("TXT", "*.txt")
-            // );
+
             File file = fileChooser.showOpenDialog(stage);
 
             if(file != null){
@@ -112,8 +110,8 @@ public class MazeApplication extends Application implements Serializable{
                 try{
                     test = Maze.fromTxt(file.getAbsolutePath());
 
-                    System.out.println(file.getAbsolutePath());
-                    System.out.println(test.toString());
+                    // System.out.println(file.getAbsolutePath());
+                    // System.out.println(test.toString());
 
                     Route = new RouteFinder(test);
 
@@ -127,7 +125,6 @@ public class MazeApplication extends Application implements Serializable{
                     System.out.println("Error: InvalidMazeException happened.");
 
                 }
-
 
             }
 
@@ -149,8 +146,6 @@ public class MazeApplication extends Application implements Serializable{
 
             if(objfile != null){
 
-
-
                 try{
                     Route = Route.load(objfile.getAbsolutePath());
                     test = Route.getMaze();
@@ -169,8 +164,8 @@ public class MazeApplication extends Application implements Serializable{
                         all = all + split;
                     }
 
-                    System.out.println(all);
-                    System.out.println(System.getProperty("user.dir"));
+                    // System.out.println(all);
+                    // System.out.println(System.getProperty("user.dir"));
 
                     File file = new File(System.getProperty("user.dir") + File.separator + "temp.txt");
                     file.createNewFile();
@@ -178,16 +173,7 @@ public class MazeApplication extends Application implements Serializable{
                     out.write(all);
                     out.flush();
 
-                
                     test = Maze.fromTxt(System.getProperty("user.dir") + File.separator + "temp.txt");
-
-                    System.out.println(test.getTiles());
-
-                    if(test == null){
-                        System.out.println("test is empty");
-                    }else{
-                        System.out.println(test);
-                    }
 
                     updateRoute();
                     start(stage);
@@ -195,11 +181,9 @@ public class MazeApplication extends Application implements Serializable{
                     System.out.println("Error: IOException happened.");
                 }catch(InvalidMazeException ex){
                     System.out.println("Error: InvalidMazeException happened.");
-
                 }catch(NullPointerException ex){
                     System.out.println("Null pointer exception, this means the file is empty or otherwise.");
                 }
-
 
             }else{
                 System.out.println("No objfile is loaded or the objfile is empty.");
@@ -211,11 +195,7 @@ public class MazeApplication extends Application implements Serializable{
         saveRt.setText("Save Route");
         saveRt.setOnAction(e->{
 
-
-     
-
             if(Route != null){
-
 
                 try{
                     FileChooser objfileSaver = Visual.filechooser();
@@ -236,8 +216,6 @@ public class MazeApplication extends Application implements Serializable{
                 }catch(NullPointerException ex){
                     System.out.println("Null Pointer Exception, nothing really stored.");
                 }
-
-
 
             }else{
                 System.out.println("You wrote nothing to this file, this file is empty, so you can not do this.");
@@ -265,7 +243,6 @@ public class MazeApplication extends Application implements Serializable{
             }else{
                 System.out.println("No maze map loaded.");
             }
-  
 
         });
 
@@ -311,9 +288,7 @@ public class MazeApplication extends Application implements Serializable{
         // This is the scene 
         Scene scene = new Scene(group);
 
-
         stage.setScene(scene); 
- 
 
         stage.setTitle("Maze");  
 
@@ -325,7 +300,7 @@ public class MazeApplication extends Application implements Serializable{
     /**
      * The main method of JavaFX, user interface. (public)
      */
-    public static void main(String args[]) { 
+    public static void main(String args[]) {
         launch(args);
     }
 
@@ -340,8 +315,8 @@ public class MazeApplication extends Application implements Serializable{
             for(int ii=0; ii<test.getColno(); ii++){ // row number
 
                 if(test.getTileAtLocation(test.setCoord(ii,i)).toString() == "#"){
-                    Rectangle R1 = Visual.rectangle(); 
-                    R1.setFill (Color.web("#895B35")); 
+                    Rectangle R1 = Visual.rectangle();
+                    R1.setFill (Color.web("#895B35"));
                     R1.setArcHeight(15);
                     R1.setArcWidth(15);
                     HBox HB = Visual.hbox();
@@ -415,7 +390,7 @@ public class MazeApplication extends Application implements Serializable{
                 }else if(Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i)).toString() == "."){
                     if ( Route.getBlackList().contains(  Route.getMaze().getTileAtLocation(Route.getMaze().setCoord(ii,i))  )  ){
                         Rectangle R1 = Visual.rectangle(); 
-                        R1.setFill (Color.WHITE); 
+                        R1.setFill (Color.WHITE);
                         R1.setArcHeight(15);
                         R1.setArcWidth(15);
                         Text text = Visual.pathtext();

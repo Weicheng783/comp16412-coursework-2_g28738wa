@@ -13,7 +13,6 @@ public class Tile implements Serializable{
 
     /**
      * This field is Maze.Coordinate, we fetch and store coordinates in Maze.Coordinate. (protected)
-     * @param coords: Coordinates of a Tile object.
      */
     protected Maze.Coordinate coords;
 
@@ -36,11 +35,9 @@ public class Tile implements Serializable{
      * @return A tile object if the single char is in .#ex, otherwise it returns null.
      */
     protected static Tile fromChar(char letter){
-        // Tile a = new Tile();
 
         if(letter == '.'){
             Tile a = new Tile(Type.CORRIDOR);
-            // a.type = Type.CORRIDOR;
             return a;
         }else if(letter == '#'){
             Tile a = new Tile(Type.WALL);
@@ -68,7 +65,7 @@ public class Tile implements Serializable{
       * @return True if it can be navigated, false when the type is WALL otherwise.
       */
     public boolean isNavigable(){
-        if(getType()==Type.WALL){
+        if(getType() == Type.WALL | getType() == null){
             return false;
         }else{
             return true;
